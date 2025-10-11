@@ -20,8 +20,8 @@ DIR_OBJ	=	objects
 DIR_SRC	=	src
 
 HDR		=	$(wildcard $(DIR_HDR)/*.h)
-SRC		=	$(shell find $(DIR_SRC) -name "*.c")
 OBJ		=	$(subst $(DIR_SRC)/,$(DIR_OBJ)/,$(SRC:.c=.o))
+SRC		=	$(shell find $(DIR_SRC) -name "*.c")
 
 all: $(DIR_OBJ) $(NAME)
 
