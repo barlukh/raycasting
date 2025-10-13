@@ -1,0 +1,63 @@
+{
+   dl_open_worker_addr8
+   Memcheck:Addr8
+   ...
+   fun:dl_open_worker
+   ...
+}
+{
+   dl_open_worker_leak
+   Memcheck:Leak
+   ...
+   fun:dl_open_worker
+   ...
+}
+{
+   glfwInit_leak
+   Memcheck:Leak
+   ...
+   fun:glfwInit
+   ...
+}
+{
+   _glfwInitX11_leak
+   Memcheck:Leak
+   ...
+   fun:_glfwInitX11
+   ...
+}
+{
+   _dl_init_leak
+   Memcheck:Leak
+   ...
+   fun:_dl_init
+   ...
+}
+{
+   _XrmInitParseInfo_leak
+   Memcheck:Leak
+   ...
+   fun:_XrmInitParseInfo
+   ...
+}
+{
+   glfwTerminate_leak
+   Memcheck:Leak
+   ...
+   fun:glfwTerminate
+   ...
+}
+{
+   LLVMParseCommandLineOptions_leak
+   Memcheck:Leak
+   ...
+   fun:LLVMParseCommandLineOptions
+   ...
+}
+{
+   LLVMRunPassManager_leak
+   Memcheck:Leak
+   ...
+   fun:LLVMRunPassManager
+   ...
+}
