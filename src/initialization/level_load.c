@@ -10,7 +10,7 @@
 #include "raycasting.h"
 
 static char *selectLevel(Game *game);
-static FILE *openLevel(char *path, Game *game);
+static FILE *openLevel(const char *path, Game *game);
 static int  countLines(char *buffer, size_t *lineCount, FILE *fp, Game *game);
 static int  copyMap(char *buffer, size_t lineCount, FILE *fp, Game *game);
 
@@ -61,7 +61,7 @@ static char *selectLevel(Game *game)
     }
 }
 
-FILE *openLevel(char *path, Game *game)
+FILE *openLevel(const char *path, Game *game)
 {
     FILE *fp = fopen(path, "r");
     if (!fp)
