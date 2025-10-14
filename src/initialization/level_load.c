@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*  File:       level_load.c                                                  */
-/*  Purpose:    Handles parsing of the levelX.rcm files and loads levels      */
+/*  Purpose:    Handles opening of levelX.rcm files and loads maps            */
 /*  Author:     barlukh (Boris Gazur)                                         */
 /*  Updated:    2025/10/14                                                    */
 /*                                                                            */
@@ -14,7 +14,7 @@ static FILE *openLevel(char *path, Game *game);
 static int  countLines(char *buffer, size_t *lineCount, FILE *fp, Game *game);
 static int  copyMap(char *buffer, size_t lineCount, FILE *fp, Game *game);
 
-int loadLevel(Game *game)
+int levelLoad(Game *game)
 {
     char *path = selectLevel(game);
     if (!path)
