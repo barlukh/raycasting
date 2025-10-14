@@ -3,7 +3,7 @@
 #   File:       Makefile                                                       #
 #   Purpose:    Main compilation file of the program                           #
 #   Author:     barlukh (Boris Gazur)                                          #
-#   Updated:    2025/10/13                                                     #
+#   Updated:    2025/10/14                                                     #
 #                                                                              #
 # **************************************************************************** #
 
