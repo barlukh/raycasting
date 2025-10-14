@@ -13,7 +13,10 @@ static int  initializeScreen(Game *game);
 
 int initializeGame(Game *game)
 {
-    if (loadLevel(game) != SUCCESS)
+    if (levelLoad(game) != SUCCESS)
+        return FAILURE;
+
+    if (levelValidate(game) != SUCCESS)
         return FAILURE;
 
     if (initializeScreen(game) != SUCCESS)
