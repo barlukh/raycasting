@@ -27,7 +27,7 @@ DIR_OBJ	=	objects
 DIR_SRC	=	src
 
 HDR		=	$(wildcard $(DIR_HDR)/*.h)
-OBJ		=	$(subst $(DIR_SRC)/,$(DIR_OBJ)/,$(SRC:.c=.o))
+OBJ		=	$(patsubst $(DIR_SRC)/%.c,$(DIR_OBJ)/%.o,$(SRC))
 SRC		=	$(shell find $(DIR_SRC) -name "*.c")
 
 all: $(NAME)
@@ -40,7 +40,7 @@ $(DIR_OBJ):
 	mkdir -p $(DIR_OBJ)
 	@echo "📁 Created directory for object files"
 
-$(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(HDR)
+$(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(HDR) | prepare_dirs
 	$(CC) $(CFLAGS) -I $(DIR_HDR) -c $< -o $@
 
 clean:
@@ -53,6 +53,9 @@ fclean:
 	$(RM) $(NAME)
 	@echo "🧹 Executable removed"
 
+prepare_dirs:
+	mkdir -p $(sort $(dir $(OBJ)))
+
 re: fclean all
 
 run: $(NAME)
@@ -61,4 +64,4 @@ run: $(NAME)
 valgrind: $(NAME)
 	valgrind $(FLAGS) ./$(NAME)
 
-.PHONY: all clean fclean re run valgrind
+.PHONY: all clean fclean prepare_dirs re run valgrind
