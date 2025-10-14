@@ -3,13 +3,13 @@
 /*  File:       init.c                                                        */
 /*  Purpose:    Functions for initializing starting values                    */
 /*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/11                                                    */
+/*  Updated:    2025/10/14                                                    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raycasting.h"
 
-static int initializeScreen(Game *game);
+static int  initializeScreen(Game *game);
 
 int initializeGame(Game *game)
 {
@@ -22,7 +22,20 @@ int initializeGame(Game *game)
 static int initializeScreen(Game *game)
 {
     SetTraceLogLevel(LOG_NONE);
+
+    if (DEFAULT_SCREEN_WIDTH <= 0 || DEFAULT_SCREEN_HEIGHT <= 0)
+    {
+        fputs(ERR_SCREEN_DEF, stderr);
+        return FAILURE;
+    }
+
     InitWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, TITLE);
+    if (!IsWindowReady())
+    {
+        fputs(ERR_SCREEN_INIT, stderr);
+        return FAILURE;
+    }
+
     ToggleBorderlessWindowed();
     HideCursor();
 
@@ -30,9 +43,9 @@ static int initializeScreen(Game *game)
     game->screen.width = GetMonitorWidth(currentMonitor);
     game->screen.height = GetMonitorHeight(currentMonitor);
 
-    if (!IsWindowReady() || game->screen.width <= 0 || game->screen.height <= 0)
+    if (game->screen.width <= 0 || game->screen.height <= 0)
     {
-        fputs(ERR_INIT_SCREEN, stderr);
+        cleanProgram(ERR_SCREEN_SIZE, game);
         return FAILURE;
     }
 
