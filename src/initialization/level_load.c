@@ -3,7 +3,7 @@
 /*  File:       level_load.c                                                  */
 /*  Purpose:    Handles opening of levelX.rcm files and loads maps            */
 /*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/14                                                    */
+/*  Updated:    2025/10/15                                                    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static char *selectLevel(Game *game)
     }
 }
 
-FILE *openLevel(const char *path, Game *game)
+static FILE *openLevel(const char *path, Game *game)
 {
     FILE *fp = fopen(path, "r");
     if (!fp)
