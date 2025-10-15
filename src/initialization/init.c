@@ -3,7 +3,7 @@
 /*  File:       init.c                                                        */
 /*  Purpose:    Functions for initializing starting values                    */
 /*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/14                                                    */
+/*  Updated:    2025/10/15                                                    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int initializeGame(Game *game)
 static int initializeScreen(Game *game)
 {
     SetTraceLogLevel(LOG_NONE);
+    SetTargetFPS(60);
 
     if (DEFAULT_SCREEN_WIDTH <= 0 || DEFAULT_SCREEN_HEIGHT <= 0)
     {

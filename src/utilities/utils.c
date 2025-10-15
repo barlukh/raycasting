@@ -3,7 +3,7 @@
 /*  File:       utils.c                                                       */
 /*  Purpose:    Various utility and helper functions                          */
 /*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/14                                                    */
+/*  Updated:    2025/10/15                                                    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@ char *copyString(const char *s)
         return NULL;
 
     size_t len = strlen(s) + 1;
-    char *copy = malloc(len);
+    char *copy = calloc(len, sizeof(char));
     if (!copy)
         return NULL;
 
@@ -23,4 +23,29 @@ char *copyString(const char *s)
         copy[i] = s[i];
 
     return copy;
+}
+
+bool isPlayerTile(char tile)
+{
+    if (tile == PLAYER_N || tile == PLAYER_S
+        || tile == PLAYER_W || tile == PLAYER_E)
+        return true;
+    
+    return false;
+}
+
+bool isValidTile(char tile)
+{
+    if (tile == EMPTY || tile == FLOOR || tile == WALL || isPlayerTile(tile))
+        return true;
+
+    return false;
+}
+
+bool isWalkableTile(char tile)
+{
+    if (tile == FLOOR || isPlayerTile(tile))
+        return true;
+
+    return false;
 }

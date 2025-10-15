@@ -3,7 +3,7 @@
 /*  File:       raycasting.h                                                  */
 /*  Purpose:    Main header file of the program                               */
 /*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/14                                                    */
+/*  Updated:    2025/10/15                                                    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 #define FAILURE 1
 
 #define MAX_MAP_SIDE_LEN    64
+#define PLANE_FOV           0.66
 
 #define LEVEL0  "levels/level0.rcm"
 #define LEVEL1  "levels/level1.rcm"
@@ -40,11 +41,22 @@
 #define LEVEL4  "levels/level4.rcm"
 #define LEVEL5  "levels/level5.rcm"
 
+#define EMPTY       ' '
+#define FLOOR       '0'
+#define WALL        '1'
+#define PLAYER_N    'N'
+#define PLAYER_S    'S'
+#define PLAYER_E    'E'
+#define PLAYER_W    'W'
+#define VISITED     'v'
+
 #define CLEAN_EXIT      "Program terminated successfully\n"
 #define ERR_FILE_OPEN   "Error: Failed to open file\n"
 #define ERR_FILE_READ   "Error: Failed to read file\n"
+#define ERR_MAP_OPEN    "Error: Map not enclosed\n"
 #define ERR_MAP_FORMAT  "Error: Invalid map format\n"
 #define ERR_MAP_PLAYER  "Error: Invalid player position\n"
+#define ERR_MAP_TILE    "Error: Invalid tile character\n"
 #define ERR_MEM_ALLOC   "Error: Memory allocation\n"
 #define ERR_LEVEL_PATH  "Error: Invalid level file path\n"
 #define ERR_SCREEN_DEF  "Error: Invalid default window values\n"
@@ -84,31 +96,17 @@ typedef struct Game
     Screen      screen;
 }   Game;
 
-typedef enum Tiles
-{
-    FLOOR,
-    CEILING,
-    DOOR,
-    WALL_0,
-    WALL_1,
-    WALL_2,
-    WALL_3,
-    SPRITE_0,
-    SPRITE_1,
-    SPRITE_2,
-    PLAYER_N,
-    PLAYER_S,
-    PLAYER_W,
-    PLAYER_E
-}   Tiles;
-
 //------------------------------------------------------------------------------
 // Function Prototypes
 //------------------------------------------------------------------------------
 
 void    cleanProgram(const char *errMsg, Game *game);
 char    *copyString(const char *s);
+void    freeMap(char **map);
 int     initializeGame(Game *game);
+bool    isPlayerTile(char tile);
+bool    isValidTile(char tile);
+bool    isWalkableTile(char tile);
 int     levelLoad(Game *game);
 int     levelValidate(Game *game);
 

@@ -3,33 +3,54 @@
 /*  File:       level_validate.c                                              */
 /*  Purpose:    Validates the content of a loaded level map                   */
 /*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/14                                                    */
+/*  Updated:    2025/10/15                                                    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raycasting.h"
 
-static int  findPlayer(Game *game);
-static int  setPlayer(char tile, int i, int j, Game *game);
+static int  validateTiles(Game *game);
+static int  setPlayer(char tile, size_t x, size_t y, Game *game);
+static char **createTempMap(Game *game);
+static int  floodFill(char **map, char **tempMap, int col, int row);
 
 int levelValidate(Game *game)
 {
-    if (findPlayer(game) != SUCCESS)
+    if (validateTiles(game) != SUCCESS)
         return FAILURE;
-    
+
+    char **tempMap = createTempMap(game);
+    if (!tempMap)
+        return FAILURE;
+
+    if (floodFill(game->level.map, tempMap,
+        (int)game->player.posX, (int)game->player.posY) != SUCCESS)
+    {
+        cleanProgram(ERR_MAP_OPEN, game);
+        freeMap(tempMap);
+        return FAILURE;
+    }
+
+    freeMap(tempMap);
+
     return SUCCESS;
 }
 
-static int findPlayer(Game *game)
+static int validateTiles(Game *game)
 {
     bool playerFound = false;
 
-    for (size_t i = 0; game->level.map[i]; i++)
+    for (size_t y = 0; game->level.map[y]; y++)
     {
-        for (size_t j = 0; game->level.map[i][j]; j++)
+        for (size_t x = 0; game->level.map[y][x]; x++)
         {
-            char tile = game->level.map[i][j];
-            if (tile == 'N' || tile == 'S' || tile == 'W' || tile == 'E')
+            if (!isValidTile(game->level.map[y][x]))
+            {
+                cleanProgram(ERR_MAP_TILE, game);
+                return FAILURE;
+            }
+
+            if (isPlayerTile(game->level.map[y][x]))
             {
                 if (playerFound)
                 {
@@ -39,12 +60,11 @@ static int findPlayer(Game *game)
                 else
                 {
                     playerFound = true;
-                    if (setPlayer(game->level.map[i][j], i, j, game) != SUCCESS)
+                    if (setPlayer(game->level.map[y][x], x, y, game) != SUCCESS)
                         return FAILURE;
                 }
             }
-        }
-        
+        } 
     }
 
     if (!playerFound)
@@ -56,36 +76,36 @@ static int findPlayer(Game *game)
     return SUCCESS;
 }
 
-static int  setPlayer(char tile, int i, int j, Game *game)
+static int setPlayer(char tile, size_t x, size_t y, Game *game)
 {
-    game->player.posX = j;
-    game->player.posY = i;
+    game->player.posX = (double)x;
+    game->player.posY = (double)y;
 
     switch (tile)
     {
-        case 'N':
+        case PLAYER_N:
             game->player.dirX = 0;
             game->player.dirY = -1;
-            game->player.planeX = 0.66;
+            game->player.planeX = PLANE_FOV;
             game->player.planeY = 0;
             break;
-        case 'S':
+        case PLAYER_S:
             game->player.dirX = 0;
             game->player.dirY = 1;
-            game->player.planeX = -0.66;
+            game->player.planeX = -PLANE_FOV;
             game->player.planeY = 0;
             break;
-        case 'W':
+        case PLAYER_W:
             game->player.dirX = -1;
             game->player.dirY = 0;
             game->player.planeX = 0;
-            game->player.planeY = -0.66;
+            game->player.planeY = -PLANE_FOV;
             break;
-        case 'E':
+        case PLAYER_E:
             game->player.dirX = 1;
             game->player.dirY = 0;
             game->player.planeX = 0;
-            game->player.planeY = 0.66;
+            game->player.planeY = PLANE_FOV;
             break;
         default:
             cleanProgram(ERR_MAP_PLAYER, game);
@@ -93,4 +113,69 @@ static int  setPlayer(char tile, int i, int j, Game *game)
     }
 
     return SUCCESS;
+}
+
+static char **createTempMap(Game *game)
+{
+    size_t lineCount = 0;
+
+    while (game->level.map[lineCount])
+        lineCount++;
+
+    char **tempMap = calloc(sizeof(char *), lineCount + 1);
+    if (!tempMap)
+    {
+        cleanProgram(ERR_MEM_ALLOC, game);
+        return NULL;
+    }
+
+    for (size_t i = 0; i < lineCount; i++)
+    {
+        size_t lineLength = strlen(game->level.map[i]);
+        tempMap[i] = calloc(lineLength + 1, sizeof(char));
+        if (!tempMap[i])
+        {
+            freeMap(tempMap);
+            cleanProgram(ERR_MEM_ALLOC, game);
+            return NULL;
+        }
+    }
+
+    tempMap[lineCount] = NULL;
+    
+    return tempMap;
+}
+
+static int floodFill(char **map, char **tempMap, int col, int row)
+{
+	if (row < 0 || col < 0)
+		return (FAILURE);
+
+	if (!map[row] || col >= (int)strlen(map[row]))
+		return (FAILURE);
+
+	if (tempMap[row][col] == VISITED)
+		return (SUCCESS);
+
+	tempMap[row][col] = VISITED;
+
+	if (map[row][col] == WALL)
+		return (SUCCESS);
+
+	if (map[row][col] == EMPTY)
+		return (FAILURE);
+
+	if (!isWalkableTile(map[row][col]) && map[row][col] != EMPTY)
+		return (SUCCESS);
+
+	if (floodFill(map, tempMap, col - 1, row) != SUCCESS)
+		return (FAILURE);
+	if (floodFill(map, tempMap, col + 1, row) != SUCCESS)
+		return (FAILURE);
+	if (floodFill(map, tempMap, col, row - 1) != SUCCESS)
+		return (FAILURE);
+	if (floodFill(map, tempMap, col, row + 1) != SUCCESS)
+		return (FAILURE);
+
+	return (SUCCESS);
 }
