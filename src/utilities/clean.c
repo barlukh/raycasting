@@ -9,28 +9,26 @@
 
 #include "raycasting.h"
 
-static void freeMap(Game *game);
-
 void cleanProgram(const char *errMsg, Game *game)
 {
-    freeMap(game);
+    freeMap(game->level.map);
     fputs(errMsg, stderr);
 }
 
-void freeMap(Game *game)
+void freeMap(char **map)
 {
     size_t i = 0;
 
-    if (!game->level.map)
+    if (!map)
         return;
 
-    while (game->level.map[i])
+    while (map[i])
     {
-        free(game->level.map[i]);
-        game->level.map[i] = NULL;
+        free(map[i]);
+        map[i] = NULL;
         i++;
     }
 
-    free(game->level.map);
-    game->level.map = NULL;
+    free(map);
+    map = NULL;
 }
