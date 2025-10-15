@@ -3,7 +3,7 @@
 /*  File:       clean.c                                                       */
 /*  Purpose:    Functions for cleaning up the program resources               */
 /*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/14                                                    */
+/*  Updated:    2025/10/15                                                    */
 /*                                                                            */
 /* ************************************************************************** */
 
