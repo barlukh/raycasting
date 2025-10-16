@@ -3,16 +3,16 @@
 /*  File:       level_validate.c                                              */
 /*  Purpose:    Validates the content of a loaded level map                   */
 /*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/15                                                    */
+/*  Updated:    2025/10/16                                                    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raycasting.h"
 
-static int  validateTiles(Game *game);
-static int  setPlayer(char tile, size_t x, size_t y, Game *game);
+static int validateTiles(Game *game);
+static int setPlayer(char tile, size_t x, size_t y, Game *game);
 static char **createTempMap(Game *game);
-static int  floodFill(char **map, char **tempMap, int col, int row);
+static int floodFill(char **map, char **tempMap, int col, int row);
 
 int levelValidate(Game *game)
 {
@@ -78,8 +78,8 @@ static int validateTiles(Game *game)
 
 static int setPlayer(char tile, size_t x, size_t y, Game *game)
 {
-    game->player.posX = (double)x;
-    game->player.posY = (double)y;
+    game->player.posX = (double)x + 0.5;
+    game->player.posY = (double)y + 0.5;
 
     switch (tile)
     {

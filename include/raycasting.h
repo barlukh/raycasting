@@ -3,7 +3,7 @@
 /*  File:       raycasting.h                                                  */
 /*  Purpose:    Main header file of the program                               */
 /*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/15                                                    */
+/*  Updated:    2025/10/16                                                    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 // Library Headers
 //------------------------------------------------------------------------------
 
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,6 +54,7 @@
 #define CLEAN_EXIT      "Program terminated successfully\n"
 #define ERR_FILE_OPEN   "Error: Failed to open file\n"
 #define ERR_FILE_READ   "Error: Failed to read file\n"
+#define ERR_IMAGE_GEN   "Error: Failed to generate image\n"
 #define ERR_MAP_OPEN    "Error: Map not enclosed\n"
 #define ERR_MAP_FORMAT  "Error: Invalid map format\n"
 #define ERR_MAP_PLAYER  "Error: Invalid player position\n"
@@ -62,6 +64,7 @@
 #define ERR_SCREEN_DEF  "Error: Invalid default window values\n"
 #define ERR_SCREEN_INIT "Error: Window initialization\n"
 #define ERR_SCREEN_SIZE "Error: Screen size values\n"
+#define ERR_TEX_LOAD    "Error: Failed to load texture\n"
 
 //------------------------------------------------------------------------------
 // Type Definitions
@@ -91,6 +94,8 @@ typedef struct Screen
 
 typedef struct Game
 {
+    Image       img;
+    Texture2D   texture;
     Level       level;
     Player      player;
     Screen      screen;
@@ -109,5 +114,6 @@ bool    isValidTile(char tile);
 bool    isWalkableTile(char tile);
 int     levelLoad(Game *game);
 int     levelValidate(Game *game);
+void    renderFrame(Game *game);
 
 #endif

@@ -3,20 +3,20 @@
 /*  File:       level_load.c                                                  */
 /*  Purpose:    Handles opening of levelX.rcm files and loads maps            */
 /*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/15                                                    */
+/*  Updated:    2025/10/16                                                    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raycasting.h"
 
-static char *selectLevel(Game *game);
+static const char *selectLevel(Game *game);
 static FILE *openLevel(const char *path, Game *game);
-static int  countLines(char *buffer, size_t *lineCount, FILE *fp, Game *game);
-static int  copyMap(char *buffer, size_t lineCount, FILE *fp, Game *game);
+static int countLines(char *buffer, size_t *lineCount, FILE *fp, Game *game);
+static int copyMap(char *buffer, size_t lineCount, FILE *fp, Game *game);
 
 int levelLoad(Game *game)
 {
-    char *path = selectLevel(game);
+    const char *path = selectLevel(game);
     if (!path)
         return FAILURE;
 
@@ -24,8 +24,8 @@ int levelLoad(Game *game)
     if (!fp)
         return FAILURE;
 
-    char    buffer[MAX_MAP_SIDE_LEN];
-    size_t  lineCount = 0;
+    char buffer[MAX_MAP_SIDE_LEN];
+    size_t lineCount = 0;
     if (countLines(buffer, &lineCount, fp, game) != SUCCESS)
         return FAILURE;
 
@@ -39,7 +39,7 @@ int levelLoad(Game *game)
     return SUCCESS;
 }
 
-static char *selectLevel(Game *game)
+static const char *selectLevel(Game *game)
 {
     switch (game->level.index)
     {

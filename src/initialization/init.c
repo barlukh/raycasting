@@ -3,13 +3,14 @@
 /*  File:       init.c                                                        */
 /*  Purpose:    Functions for initializing starting values                    */
 /*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/15                                                    */
+/*  Updated:    2025/10/16                                                    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raycasting.h"
 
-static int  initializeScreen(Game *game);
+static int initializeScreen(Game *game);
+static int initializeGraphics(Game *game);
 
 int initializeGame(Game *game)
 {
@@ -20,6 +21,9 @@ int initializeGame(Game *game)
         return FAILURE;
 
     if (initializeScreen(game) != SUCCESS)
+        return FAILURE;
+
+    if (initializeGraphics(game) != SUCCESS)
         return FAILURE;
 
     return SUCCESS;
@@ -53,6 +57,27 @@ static int initializeScreen(Game *game)
     if (game->screen.width <= 0 || game->screen.height <= 0)
     {
         cleanProgram(ERR_SCREEN_SIZE, game);
+        CloseWindow();
+        return FAILURE;
+    }
+
+    return SUCCESS;
+}
+
+static int initializeGraphics(Game *game)
+{
+    game->img = GenImageColor(game->screen.width, game->screen.height, WHITE);
+    if (!game->img.data)
+    {
+        cleanProgram(ERR_IMAGE_GEN, game);
+        CloseWindow();
+        return FAILURE;
+    }
+
+    game->texture = LoadTextureFromImage(game->img);
+    if (game->texture.id == 0)
+    {
+        cleanProgram(ERR_TEX_LOAD, game);
         CloseWindow();
         return FAILURE;
     }
