@@ -9,17 +9,25 @@
 
 #include "raycasting.h"
 
+static void clearImage(Game *game);
 static void castRayforColumn(int x, int *drawStart, int *drawEnd, Game *game);
 static void drawVerticalLine(int x, int drawStart, int drawEnd, Game *game);
 
 void renderFrame(Game *game)
 {
+    clearImage(game);
+
     for (int x = 0; x < game->screen.width; x++)
     {
         int drawStart, drawEnd;
         castRayforColumn(x, &drawStart, &drawEnd, game);
         drawVerticalLine(x, drawStart, drawEnd, game);
     }
+}
+
+static void clearImage(Game *game)
+{
+    memset(game->img.data, 0xF5F5F5FF, game->screen.width * game->screen.height * sizeof(int));
 }
 
 static void castRayforColumn(int x, int *drawStart, int *drawEnd, Game *game)

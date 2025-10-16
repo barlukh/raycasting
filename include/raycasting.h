@@ -34,6 +34,8 @@
 
 #define MAX_MAP_SIDE_LEN    64
 #define PLANE_FOV           0.66
+#define MOVEMENT_SPEED      4
+#define MOUSE_SENSITIVITY   0.002f
 
 #define LEVEL0  "levels/level0.rcm"
 #define LEVEL1  "levels/level1.rcm"
@@ -107,6 +109,7 @@ typedef struct Game
 
 void    cleanProgram(const char *errMsg, Game *game);
 char    *copyString(const char *s);
+void    detectUserInput(Game *game);
 void    freeMap(char **map);
 int     initializeGame(Game *game);
 bool    isPlayerTile(char tile);

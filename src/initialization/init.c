@@ -11,6 +11,7 @@
 
 static int initializeScreen(Game *game);
 static int initializeGraphics(Game *game);
+static void initialDraw(void);
 
 int initializeGame(Game *game)
 {
@@ -25,6 +26,8 @@ int initializeGame(Game *game)
 
     if (initializeGraphics(game) != SUCCESS)
         return FAILURE;
+
+    initialDraw();
 
     return SUCCESS;
 }
@@ -48,7 +51,8 @@ static int initializeScreen(Game *game)
     }
 
     ToggleBorderlessWindowed();
-    HideCursor();
+    DisableCursor();
+    SetMousePosition(GetScreenWidth() / 2, GetScreenHeight() / 2);
 
     int currentMonitor = GetCurrentMonitor();
     game->screen.width = GetMonitorWidth(currentMonitor);
@@ -83,4 +87,15 @@ static int initializeGraphics(Game *game)
     }
 
     return SUCCESS;
+}
+
+// Workaround the glfw bug having incorrect mouse delta value on second frame
+static void initialDraw(void)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        EndDrawing();
+    }
 }

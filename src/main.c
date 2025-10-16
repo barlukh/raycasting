@@ -18,13 +18,14 @@ int main(void)
 
     while (!WindowShouldClose())
     {
+        detectUserInput(&game);
         renderFrame(&game);
         UpdateTexture(game.texture, game.img.data);
         
         BeginDrawing();
         
-        ClearBackground(BLACK);
-        DrawTexture(game.texture, 0, 0, WHITE);
+        ClearBackground(RAYWHITE);
+        DrawTexture(game.texture, 0, 0, RAYWHITE);
         DrawFPS(100, 100);
 
         EndDrawing();
