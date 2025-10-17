@@ -21,7 +21,7 @@ int main(void)
         detectUserInput(&game);
         renderFrame(&game);
         UpdateTexture(game.screenTexture, game.screenImg.data);
-        
+
         BeginDrawing();
         
         ClearBackground(BLACK);

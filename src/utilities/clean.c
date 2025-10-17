@@ -39,6 +39,8 @@ void freeMap(char **map)
 static void unloadResources(Game *game)
 {
     UnloadImage(game->screenImg);
+    UnloadImage(game->graphics.ceiling);
+    UnloadImage(game->graphics.floor);
     UnloadImage(game->graphics.wall);
     UnloadTexture(game->screenTexture);
 }

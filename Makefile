@@ -10,8 +10,8 @@
 NAME	=	raycasting
 
 CC		=	cc
-CFLAGS	=	-Wall -Werror -Wextra -O2 -std=c17
-LFLAGS	=	-lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+CFLAGS	=	-Wall -Werror -Wextra -O2 -std=c17 -march=native -flto
+LFLAGS	=	-lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -flto
 RM		=	rm -rf
 FLAGS	=	--show-leak-kinds=all \
 			--show-reachable=yes \

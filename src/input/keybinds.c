@@ -63,7 +63,7 @@ static void cameraRotation(Game *game)
     Vector2 mouseDelta = GetMouseDelta();
     
     smoothedDeltaX += (mouseDelta.x - smoothedDeltaX) * ROTATION_SMOOTHING;
-    float rotAmount = GetFrameTime() * smoothedDeltaX * MOUSE_SENSITIVITY;
+    float rotAmount = smoothedDeltaX * MOUSE_SENSITIVITY;
 
     float cosA = cosf(rotAmount);
     float sinA = sinf(rotAmount);

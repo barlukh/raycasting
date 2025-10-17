@@ -37,7 +37,7 @@
 
 #define PLANE_FOV           0.66
 #define MOVEMENT_SPEED      4
-#define MOUSE_SENSITIVITY   0.11f
+#define MOUSE_SENSITIVITY   0.002f
 #define ROTATION_SMOOTHING  0.8f
 
 #define BYTES_PER_PIXEL     4
@@ -74,7 +74,9 @@
 #define LEVEL_4     "levels/level4.rcm"
 #define LEVEL_5     "levels/level5.rcm"
 
-#define TEXTURE_0   "graphics/texture33.png"
+#define TEX_CEILING "graphics/texture33.png"
+#define TEX_FLOOR   "graphics/texture21.png"
+#define TEX_WALL    "graphics/texture12.png"
 
 //------------------------------------------------------------------------------
 // Type Definitions

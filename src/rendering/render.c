@@ -1,30 +1,89 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*  File:       render.c                                                      */
-/*  Purpose:    Rendering functions for raycasting and drawing                */
-/*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/17                                                    */
-/*                                                                            */
-/* ************************************************************************** */
+/* ************************************************************************************ */
+/*                                                                                      */
+/*  File:       render.c                                                                */
+/*  Purpose:    Rendering functions for raycasting and drawing                          */
+/*  Author:     barlukh (Boris Gazur)                                                   */
+/*  Updated:    2025/10/17                                                              */
+/*                                                                                      */
+/* ************************************************************************************ */
 
 #include "raycasting.h"
 
-static void clearImage(Game *game);
+static void castRayforStripe(int y, Game *game);
 static void castRayforColumn(int x, Game *game);
+
+static Color GetImageColorManual(Image *img, int x, int y);
+static void ImageDrawPixelManual(Image *img, int x, int y, Color color);
 
 void renderFrame(Game *game)
 {
-    clearImage(game);
+    for (int y = 0; y < game->screen.height; y++)
+        castRayforStripe(y, game);
+
+    for (int x = 0; x < game->screen.width; x++)
+        castRayforColumn(x, game);
+}
+
+static void castRayforStripe(int y, Game *game)
+{
+    float rayDirX0 = game->player.dirX - game->player.planeX;
+    float rayDirY0 = game->player.dirY - game->player.planeY;
+    float rayDirX1 = game->player.dirX + game->player.planeX;
+    float rayDirY1 = game->player.dirY + game->player.planeY;
+
+    int p = y - game->screen.height / 2;
+
+    float posZ = 0.5 * game->screen.height;
+    float rowDistance = posZ / p;
+
+    float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / game->screen.width;
+    float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / game->screen.width;
+
+    float floorX = game->player.posX + rowDistance * rayDirX0;
+    float floorY = game->player.posY + rowDistance * rayDirY0;
+
+    Image texCeiling = game->graphics.ceiling;
+    Image texFloor = game->graphics.floor;
 
     for (int x = 0; x < game->screen.width; x++)
     {
-        castRayforColumn(x, game);
+        int cellX = (int)(floorX);
+        int cellY = (int)(floorY);
+
+        int texX = ((int)(texFloor.width * (floorX - cellX))) % texFloor.width;
+        int texY = ((int)(texFloor.height * (floorY - cellY))) % texFloor.height;
+
+        floorX += floorStepX;
+        floorY += floorStepY;
+
+        Color floorColor = GetImageColorManual(&texFloor, texX, texY);
+        Color ceilingColor = GetImageColorManual(&texCeiling, texX, texY);
+
+        ImageDrawPixelManual(&game->screenImg, x, y, floorColor);
+        ImageDrawPixelManual(&game->screenImg, x, game->screen.height - y - 1, ceilingColor);
     }
 }
 
-static void clearImage(Game *game)
+static Color GetImageColorManual(Image *img, int x, int y)
 {
-    memset(game->screenImg.data, 0xF5F5F5FF, game->screen.width * game->screen.height * sizeof(int));
+    unsigned char *pixels = (unsigned char *)img->data;
+    int offset = (y * img->width + x) * BYTES_PER_PIXEL;
+    Color color;
+    color.r = pixels[offset + 0];
+    color.g = pixels[offset + 1];
+    color.b = pixels[offset + 2];
+    color.a = pixels[offset + 3];
+    return color;
+}
+
+static void ImageDrawPixelManual(Image *img, int x, int y, Color color)
+{
+    unsigned char *pixels = (unsigned char *)img->data;
+    int offset = (y * img->width + x) * BYTES_PER_PIXEL;
+    pixels[offset + 0] = color.r;
+    pixels[offset + 1] = color.g;
+    pixels[offset + 2] = color.b;
+    pixels[offset + 3] = color.a;
 }
 
 static void castRayforColumn(int x, Game *game)
@@ -108,30 +167,23 @@ static void castRayforColumn(int x, Game *game)
         wallX = game->player.posX + perpWallDist * rayDirX;
     wallX -= floor((wallX));
 
-    int texX = (int)(wallX * (double)(game->graphics.wall.width));
+    Image texWall = game->graphics.wall;
+    int texX = (int)(wallX * (double)(texWall.width));
     if (side == 0 && rayDirX > 0)
-        texX = game->graphics.wall.width - texX - 1;
+        texX = texWall.width - texX - 1;
     if (side == 1 && rayDirY < 0)
-        texX = game->graphics.wall.width - texX - 1;
+        texX = texWall.width - texX - 1;
 
-    double step = 1.0 * game->graphics.wall.height / lineHeight;
+    double step = 1.0 * texWall.height / lineHeight;
     double texPos = (drawStart - game->screen.height / 2 + lineHeight / 2) * step;
-
-    unsigned char *srcPixels = (unsigned char *)game->graphics.wall.data;
-    unsigned char *dstPixels = (unsigned char *)game->screenImg.data;
 
     for (int y = drawStart; y < drawEnd; y++)
     {
-        int texY = (int)texPos & (game->graphics.wall.height - 1);
+        int texY = ((int)texPos) % texWall.height;
         texPos += step;
 
-        int srcOffset = (texY * game->graphics.wall.width + texX) * BYTES_PER_PIXEL;
-        int dstOffset = (y * game->screenImg.width + x) * BYTES_PER_PIXEL;
+        Color pixelColor = GetImageColorManual(&texWall, texX, texY);
 
-        dstPixels[dstOffset + 0] = srcPixels[srcOffset + 0];
-        dstPixels[dstOffset + 1] = srcPixels[srcOffset + 1];
-        dstPixels[dstOffset + 2] = srcPixels[srcOffset + 2];
-        dstPixels[dstOffset + 3] = srcPixels[srcOffset + 3];
+        ImageDrawPixelManual(&game->screenImg, x, y, pixelColor);
     }
-
 }
