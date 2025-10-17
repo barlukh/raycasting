@@ -1,30 +1,34 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*  File:       level_validate.c                                              */
-/*  Purpose:    Validates the content of a loaded level map                   */
-/*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/16                                                    */
-/*                                                                            */
-/* ************************************************************************** */
+/* ************************************************************************************ */
+/*                                                                                      */
+/*  File:       level_validate.c                                                        */
+/*  Purpose:    Validates the content of a loaded level map                             */
+/*  Author:     barlukh (Boris Gazur)                                                   */
+/*  Updated:    2025/10/17                                                              */
+/*                                                                                      */
+/* ************************************************************************************ */
 
 #include "raycasting.h"
 
 static int validateTiles(Game *game);
 static int setPlayer(char tile, size_t x, size_t y, Game *game);
-static char **createTempMap(Game *game);
-static int floodFill(char **map, char **tempMap, int col, int row);
+static size_t countLines(Game *game);
+static char **createTempMap(size_t lineCount, Game *game);
+static int floodFill(char **map, char **tempMap, int height, int col, int row);
 
 int levelValidate(Game *game)
 {
     if (validateTiles(game) != SUCCESS)
         return FAILURE;
 
-    char **tempMap = createTempMap(game);
+    size_t lineCount = countLines(game);
+
+    char **tempMap = createTempMap(lineCount, game);
     if (!tempMap)
         return FAILURE;
 
-    if (floodFill(game->level.map, tempMap,
-        (int)game->player.posX, (int)game->player.posY) != SUCCESS)
+    int col = (int)game->player.posX;
+    int row = (int)game->player.posY;
+    if (floodFill(game->level.map, tempMap, lineCount, col, row) != SUCCESS)
     {
         cleanProgram(ERR_MAP_OPEN, game);
         freeMap(tempMap);
@@ -115,13 +119,18 @@ static int setPlayer(char tile, size_t x, size_t y, Game *game)
     return SUCCESS;
 }
 
-static char **createTempMap(Game *game)
+static size_t countLines(Game *game)
 {
     size_t lineCount = 0;
 
     while (game->level.map[lineCount])
         lineCount++;
+    
+    return lineCount;
+}
 
+static char **createTempMap(size_t lineCount, Game *game)
+{
     char **tempMap = calloc(sizeof(char *), lineCount + 1);
     if (!tempMap)
     {
@@ -146,9 +155,9 @@ static char **createTempMap(Game *game)
     return tempMap;
 }
 
-static int floodFill(char **map, char **tempMap, int col, int row)
+static int floodFill(char **map, char **tempMap, int height, int col, int row)
 {
-	if (row < 0 || col < 0)
+	if (row < 0 || row >= height || col < 0 || col >= (int)strlen(map[row]))
 		return (FAILURE);
 
 	if (!map[row] || col >= (int)strlen(map[row]))
@@ -168,13 +177,13 @@ static int floodFill(char **map, char **tempMap, int col, int row)
 	if (!isWalkableTile(map[row][col]) && map[row][col] != EMPTY)
 		return (SUCCESS);
 
-	if (floodFill(map, tempMap, col - 1, row) != SUCCESS)
+	if (floodFill(map, tempMap, height, col - 1, row) != SUCCESS)
 		return (FAILURE);
-	if (floodFill(map, tempMap, col + 1, row) != SUCCESS)
+	if (floodFill(map, tempMap, height, col + 1, row) != SUCCESS)
 		return (FAILURE);
-	if (floodFill(map, tempMap, col, row - 1) != SUCCESS)
+	if (floodFill(map, tempMap, height, col, row - 1) != SUCCESS)
 		return (FAILURE);
-	if (floodFill(map, tempMap, col, row + 1) != SUCCESS)
+	if (floodFill(map, tempMap, height, col, row + 1) != SUCCESS)
 		return (FAILURE);
 
 	return (SUCCESS);

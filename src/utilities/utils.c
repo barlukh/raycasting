@@ -1,11 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*  File:       utils.c                                                       */
-/*  Purpose:    Various utility and helper functions                          */
-/*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/15                                                    */
-/*                                                                            */
-/* ************************************************************************** */
+/* ************************************************************************************ */
+/*                                                                                      */
+/*  File:       utils.c                                                                 */
+/*  Purpose:    Various utility and helper functions                                    */
+/*  Author:     barlukh (Boris Gazur)                                                   */
+/*  Updated:    2025/10/17                                                              */
+/*                                                                                      */
+/* ************************************************************************************ */
 
 #include "raycasting.h"
 
@@ -27,8 +27,7 @@ char *copyString(const char *s)
 
 bool isPlayerTile(char tile)
 {
-    if (tile == PLAYER_N || tile == PLAYER_S
-        || tile == PLAYER_W || tile == PLAYER_E)
+    if (tile == PLAYER_N || tile == PLAYER_S || tile == PLAYER_W || tile == PLAYER_E)
         return true;
     
     return false;

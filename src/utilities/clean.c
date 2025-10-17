@@ -1,11 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*  File:       clean.c                                                       */
-/*  Purpose:    Functions for cleaning up the program resources               */
-/*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/16                                                    */
-/*                                                                            */
-/* ************************************************************************** */
+/* ************************************************************************************ */
+/*                                                                                      */
+/*  File:       clean.c                                                                 */
+/*  Purpose:    Functions for cleaning up the program resources                         */
+/*  Author:     barlukh (Boris Gazur)                                                   */
+/*  Updated:    2025/10/17                                                              */
+/*                                                                                      */
+/* ************************************************************************************ */
 
 #include "raycasting.h"
 
@@ -38,6 +38,7 @@ void freeMap(char **map)
 
 static void unloadResources(Game *game)
 {
-    UnloadImage(game->img);
-    UnloadTexture(game->texture);
+    UnloadImage(game->screenImg);
+    UnloadImage(game->graphics.wall);
+    UnloadTexture(game->screenTexture);
 }

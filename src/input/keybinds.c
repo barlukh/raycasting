@@ -1,11 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*  File:       keybinds.c                                                    */
-/*  Purpose:    Keybinds and user input checking                              */
-/*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/16                                                    */
-/*                                                                            */
-/* ************************************************************************** */
+/* ************************************************************************************ */
+/*                                                                                      */
+/*  File:       keybinds.c                                                              */
+/*  Purpose:    Keybinds and user input checking                                        */
+/*  Author:     barlukh (Boris Gazur)                                                   */
+/*  Updated:    2025/10/17                                                              */
+/*                                                                                      */
+/* ************************************************************************************ */
 
 #include "raycasting.h"
 
@@ -56,16 +56,23 @@ static void playerMovement(Game *game)
         game->player.posY = nextY;
 }
 
+
 static void cameraRotation(Game *game)
 {
+    static float smoothedDeltaX = 0.0f;
     Vector2 mouseDelta = GetMouseDelta();
-    float rotAmount = mouseDelta.x * MOUSE_SENSITIVITY;
+    
+    smoothedDeltaX += (mouseDelta.x - smoothedDeltaX) * ROTATION_SMOOTHING;
+    float rotAmount = GetFrameTime() * smoothedDeltaX * MOUSE_SENSITIVITY;
+
+    float cosA = cosf(rotAmount);
+    float sinA = sinf(rotAmount);
 
     float oldDirX = game->player.dirX;
-    game->player.dirX =game->player.dirX * cosf(rotAmount) - game->player.dirY * sinf(rotAmount);
-    game->player.dirY = oldDirX * sinf(rotAmount) + game->player.dirY * cosf(rotAmount);
+    game->player.dirX = oldDirX * cosA - game->player.dirY * sinA;
+    game->player.dirY = oldDirX * sinA + game->player.dirY * cosA;
 
     float oldPlaneX = game->player.planeX;
-    game->player.planeX = game->player.planeX * cosf(rotAmount) - game->player.planeY * sinf(rotAmount);
-    game->player.planeY = oldPlaneX * sinf(rotAmount) + game->player.planeY * cosf(rotAmount);
+    game->player.planeX = oldPlaneX * cosA - game->player.planeY * sinA;
+    game->player.planeY = oldPlaneX * sinA + game->player.planeY * cosA;
 }

@@ -1,11 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*  File:       raycasting.h                                                  */
-/*  Purpose:    Main header file of the program                               */
-/*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/16                                                    */
-/*                                                                            */
-/* ************************************************************************** */
+/* ************************************************************************************ */
+/*                                                                                      */
+/*  File:       raycasting.h                                                            */
+/*  Purpose:    Main header file of the program                                         */
+/*  Author:     barlukh (Boris Gazur)                                                   */
+/*  Updated:    2025/10/17                                                              */
+/*                                                                                      */
+/* ************************************************************************************ */
 
 #ifndef RAYCASTING_H
 #define RAYCASTING_H
@@ -32,17 +32,15 @@
 #define SUCCESS 0
 #define FAILURE 1
 
+#define TARGET_FPS          60
 #define MAX_MAP_SIDE_LEN    64
+
 #define PLANE_FOV           0.66
 #define MOVEMENT_SPEED      4
-#define MOUSE_SENSITIVITY   0.002f
+#define MOUSE_SENSITIVITY   0.11f
+#define ROTATION_SMOOTHING  0.8f
 
-#define LEVEL0  "levels/level0.rcm"
-#define LEVEL1  "levels/level1.rcm"
-#define LEVEL2  "levels/level2.rcm"
-#define LEVEL3  "levels/level3.rcm"
-#define LEVEL4  "levels/level4.rcm"
-#define LEVEL5  "levels/level5.rcm"
+#define BYTES_PER_PIXEL     4
 
 #define EMPTY       ' '
 #define FLOOR       '0'
@@ -57,6 +55,7 @@
 #define ERR_FILE_OPEN   "Error: Failed to open file\n"
 #define ERR_FILE_READ   "Error: Failed to read file\n"
 #define ERR_IMAGE_GEN   "Error: Failed to generate image\n"
+#define ERR_IMAGE_LOAD  "Error: Failed to load image\n"
 #define ERR_MAP_OPEN    "Error: Map not enclosed\n"
 #define ERR_MAP_FORMAT  "Error: Invalid map format\n"
 #define ERR_MAP_PLAYER  "Error: Invalid player position\n"
@@ -68,9 +67,25 @@
 #define ERR_SCREEN_SIZE "Error: Screen size values\n"
 #define ERR_TEX_LOAD    "Error: Failed to load texture\n"
 
+#define LEVEL_0     "levels/level0.rcm"
+#define LEVEL_1     "levels/level1.rcm"
+#define LEVEL_2     "levels/level2.rcm"
+#define LEVEL_3     "levels/level3.rcm"
+#define LEVEL_4     "levels/level4.rcm"
+#define LEVEL_5     "levels/level5.rcm"
+
+#define TEXTURE_0   "graphics/texture33.png"
+
 //------------------------------------------------------------------------------
 // Type Definitions
 //------------------------------------------------------------------------------
+
+typedef struct Graphics
+{
+    Image       ceiling;
+    Image       floor;
+    Image       wall;
+}   Graphics;
 
 typedef struct Level
 {
@@ -96,8 +111,9 @@ typedef struct Screen
 
 typedef struct Game
 {
-    Image       img;
-    Texture2D   texture;
+    Image       screenImg;
+    Texture2D   screenTexture;
+    Graphics    graphics;
     Level       level;
     Player      player;
     Screen      screen;

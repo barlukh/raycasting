@@ -3,15 +3,14 @@
 /*  File:       render.c                                                      */
 /*  Purpose:    Rendering functions for raycasting and drawing                */
 /*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/16                                                    */
+/*  Updated:    2025/10/17                                                    */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raycasting.h"
 
 static void clearImage(Game *game);
-static void castRayforColumn(int x, int *drawStart, int *drawEnd, Game *game);
-static void drawVerticalLine(int x, int drawStart, int drawEnd, Game *game);
+static void castRayforColumn(int x, Game *game);
 
 void renderFrame(Game *game)
 {
@@ -19,18 +18,16 @@ void renderFrame(Game *game)
 
     for (int x = 0; x < game->screen.width; x++)
     {
-        int drawStart, drawEnd;
-        castRayforColumn(x, &drawStart, &drawEnd, game);
-        drawVerticalLine(x, drawStart, drawEnd, game);
+        castRayforColumn(x, game);
     }
 }
 
 static void clearImage(Game *game)
 {
-    memset(game->img.data, 0xF5F5F5FF, game->screen.width * game->screen.height * sizeof(int));
+    memset(game->screenImg.data, 0xF5F5F5FF, game->screen.width * game->screen.height * sizeof(int));
 }
 
-static void castRayforColumn(int x, int *drawStart, int *drawEnd, Game *game)
+static void castRayforColumn(int x, Game *game)
 {
     double cameraX = 2 * x / (double)game->screen.width - 1;
     double rayDirX = game->player.dirX + game->player.planeX * cameraX;
@@ -95,28 +92,46 @@ static void castRayforColumn(int x, int *drawStart, int *drawEnd, Game *game)
         perpWallDist = (sideDistY - deltaDistY);
 
     int lineHeight = (int)(game->screen.height / perpWallDist);
-    
-    *drawStart = -lineHeight / 2 + game->screen.height / 2;
-    if (*drawStart < 0)
-        *drawStart = 0;
 
-    *drawEnd = lineHeight / 2 + game->screen.height / 2;
-    if (*drawEnd >= game->screen.height)
-        *drawEnd = game->screen.height - 1;
-}
+    int drawStart = -lineHeight / 2 + game->screen.height / 2;
+    if (drawStart < 0)
+        drawStart = 0;
 
-static void drawVerticalLine(int x, int drawStart, int drawEnd, Game *game)
-{
-    int y = drawStart;
-    while (y < drawEnd)
-	{
-		const Color color = DARKGRAY;
-        unsigned char *pixels = (unsigned char *)game->img.data;
-        int offset = (y * game->img.width + x) * 4;
-        pixels[offset + 0] = color.r;
-        pixels[offset + 1] = color.g;
-        pixels[offset + 2] = color.b;
-        pixels[offset + 3] = color.a;
-		y++;
-	}
+    int drawEnd = lineHeight / 2 + game->screen.height / 2;
+    if (drawEnd >= game->screen.height)
+        drawEnd = game->screen.height - 1;
+
+    double wallX;
+    if (side == 0)
+        wallX = game->player.posY + perpWallDist * rayDirY;
+    else
+        wallX = game->player.posX + perpWallDist * rayDirX;
+    wallX -= floor((wallX));
+
+    int texX = (int)(wallX * (double)(game->graphics.wall.width));
+    if (side == 0 && rayDirX > 0)
+        texX = game->graphics.wall.width - texX - 1;
+    if (side == 1 && rayDirY < 0)
+        texX = game->graphics.wall.width - texX - 1;
+
+    double step = 1.0 * game->graphics.wall.height / lineHeight;
+    double texPos = (drawStart - game->screen.height / 2 + lineHeight / 2) * step;
+
+    unsigned char *srcPixels = (unsigned char *)game->graphics.wall.data;
+    unsigned char *dstPixels = (unsigned char *)game->screenImg.data;
+
+    for (int y = drawStart; y < drawEnd; y++)
+    {
+        int texY = (int)texPos & (game->graphics.wall.height - 1);
+        texPos += step;
+
+        int srcOffset = (texY * game->graphics.wall.width + texX) * BYTES_PER_PIXEL;
+        int dstOffset = (y * game->screenImg.width + x) * BYTES_PER_PIXEL;
+
+        dstPixels[dstOffset + 0] = srcPixels[srcOffset + 0];
+        dstPixels[dstOffset + 1] = srcPixels[srcOffset + 1];
+        dstPixels[dstOffset + 2] = srcPixels[srcOffset + 2];
+        dstPixels[dstOffset + 3] = srcPixels[srcOffset + 3];
+    }
+
 }

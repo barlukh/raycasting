@@ -1,17 +1,17 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*  File:       level_load.c                                                  */
-/*  Purpose:    Handles opening of levelX.rcm files and loads maps            */
-/*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/16                                                    */
-/*                                                                            */
-/* ************************************************************************** */
+/* ************************************************************************************ */
+/*                                                                                      */
+/*  File:       level_load.c                                                            */
+/*  Purpose:    Handles opening of levelX.rcm files and loads maps                      */
+/*  Author:     barlukh (Boris Gazur)                                                   */
+/*  Updated:    2025/10/17                                                              */
+/*                                                                                      */
+/* ************************************************************************************ */
 
 #include "raycasting.h"
 
 static const char *selectLevel(Game *game);
 static FILE *openLevel(const char *path, Game *game);
-static int countLines(char *buffer, size_t *lineCount, FILE *fp, Game *game);
+static int allocMap(char *buffer, size_t *lineCount, FILE *fp, Game *game);
 static int copyMap(char *buffer, size_t lineCount, FILE *fp, Game *game);
 
 int levelLoad(Game *game)
@@ -26,7 +26,7 @@ int levelLoad(Game *game)
 
     char buffer[MAX_MAP_SIDE_LEN];
     size_t lineCount = 0;
-    if (countLines(buffer, &lineCount, fp, game) != SUCCESS)
+    if (allocMap(buffer, &lineCount, fp, game) != SUCCESS)
         return FAILURE;
 
     rewind(fp);
@@ -44,17 +44,17 @@ static const char *selectLevel(Game *game)
     switch (game->level.index)
     {
         case 0:
-            return LEVEL0;
+            return LEVEL_0;
         case 1:
-            return LEVEL1;
+            return LEVEL_1;
         case 2:
-            return LEVEL2;
+            return LEVEL_2;
         case 3:
-            return LEVEL3;
+            return LEVEL_3;
         case 4:
-            return LEVEL4;
+            return LEVEL_4;
         case 5:
-            return LEVEL5;
+            return LEVEL_5;
         default:
             cleanProgram(ERR_LEVEL_PATH, game);
             return NULL;
@@ -73,7 +73,7 @@ static FILE *openLevel(const char *path, Game *game)
     return fp;
 }
 
-static int countLines(char *buffer, size_t *lineCount, FILE *fp, Game *game)
+static int allocMap(char *buffer, size_t *lineCount, FILE *fp, Game *game)
 {
     while (fgets(buffer, MAX_MAP_SIDE_LEN, fp))
         (*lineCount)++;

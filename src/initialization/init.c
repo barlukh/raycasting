@@ -1,11 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*  File:       init.c                                                        */
-/*  Purpose:    Functions for initializing starting values                    */
-/*  Author:     barlukh (Boris Gazur)                                         */
-/*  Updated:    2025/10/16                                                    */
-/*                                                                            */
-/* ************************************************************************** */
+/* ************************************************************************************ */
+/*                                                                                      */
+/*  File:       init.c                                                                  */
+/*  Purpose:    Functions for initializing starting values                              */
+/*  Author:     barlukh (Boris Gazur)                                                   */
+/*  Updated:    2025/10/17                                                              */
+/*                                                                                      */
+/* ************************************************************************************ */
 
 #include "raycasting.h"
 
@@ -35,7 +35,7 @@ int initializeGame(Game *game)
 static int initializeScreen(Game *game)
 {
     SetTraceLogLevel(LOG_NONE);
-    SetTargetFPS(60);
+    SetTargetFPS(TARGET_FPS);
 
     if (DEFAULT_SCREEN_WIDTH <= 0 || DEFAULT_SCREEN_HEIGHT <= 0)
     {
@@ -52,7 +52,6 @@ static int initializeScreen(Game *game)
 
     ToggleBorderlessWindowed();
     DisableCursor();
-    SetMousePosition(GetScreenWidth() / 2, GetScreenHeight() / 2);
 
     int currentMonitor = GetCurrentMonitor();
     game->screen.width = GetMonitorWidth(currentMonitor);
@@ -70,18 +69,27 @@ static int initializeScreen(Game *game)
 
 static int initializeGraphics(Game *game)
 {
-    game->img = GenImageColor(game->screen.width, game->screen.height, WHITE);
-    if (!game->img.data)
+    game->screenImg = GenImageColor(game->screen.width, game->screen.height, BLACK);
+    if (!game->screenImg.data)
     {
         cleanProgram(ERR_IMAGE_GEN, game);
         CloseWindow();
         return FAILURE;
     }
 
-    game->texture = LoadTextureFromImage(game->img);
-    if (game->texture.id == 0)
+    game->screenTexture = LoadTextureFromImage(game->screenImg);
+    if (game->screenTexture.id == 0)
     {
         cleanProgram(ERR_TEX_LOAD, game);
+        CloseWindow();
+        return FAILURE;
+    }
+
+    game->graphics.wall = LoadImage(TEXTURE_0);
+    ImageFormat(&game->graphics.wall, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
+    if (!game->graphics.wall.data)
+    {
+        cleanProgram(ERR_IMAGE_LOAD, game);
         CloseWindow();
         return FAILURE;
     }
@@ -95,7 +103,7 @@ static void initialDraw(void)
     for (int i = 0; i < 4; i++)
     {
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
         EndDrawing();
     }
 }
