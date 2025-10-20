@@ -11,7 +11,7 @@
 
 static void castRayforStripe(int y, Game *game);
 static void castRayforColumn(int x, Game *game);
-static Color getColor(Image *img, int x, int y);
+static Color getColor(Image *img, int x, int y, double perpWallDist);
 static void setColor(Image *img, int x, int y, Color color);
 
 void renderFrame(Game *game)
@@ -56,8 +56,8 @@ static void castRayforStripe(int y, Game *game)
         floorX += floorStepX;
         floorY += floorStepY;
 
-        Color ceilingColor = getColor(&game->graphics.ceiling, texX, texY);
-        Color floorColor = getColor(&game->graphics.floor, texX, texY);
+        Color ceilingColor = getColor(&game->graphics.ceiling, texX, texY, rowDistance);
+        Color floorColor = getColor(&game->graphics.floor, texX, texY, rowDistance);
         
         setColor(&game->screenImg, x, game->screen.height - y - 1, ceilingColor);
         setColor(&game->screenImg, x, y, floorColor);
@@ -161,21 +161,26 @@ static void castRayforColumn(int x, Game *game)
         int texY = ((int)texPos) % tileTex.height;
         texPos += step;
 
-        Color pixelColor = getColor(&game->graphics.wall, texX, texY);
+        Color pixelColor = getColor(&game->graphics.wall, texX, texY, perpWallDist);
 
         setColor(&game->screenImg, x, y, pixelColor);
     }
 }
 
-static Color getColor(Image *img, int x, int y)
+static Color getColor(Image *img, int x, int y, double distance)
 {
     unsigned char *pixels = (unsigned char *)img->data;
     int offset = (y * img->width + x) * BYTES_PER_PIXEL;
+
+    float brightness = fmaxf(0.2f, 1.0f - distance * SHADOW_STRENGHT);
+    int scale = (int)(brightness * 256);
+
     Color color;
-    color.r = pixels[offset + 0];
-    color.g = pixels[offset + 1];
-    color.b = pixels[offset + 2];
-    color.a = pixels[offset + 3];
+    color.r = (pixels[offset + 0] * scale) >> 8;
+    color.g = (pixels[offset + 1] * scale) >> 8;
+    color.b = (pixels[offset + 2] * scale) >> 8;
+    color.a = (pixels[offset + 3] * scale) >> 8;
+
     return color;
 }
 
@@ -183,6 +188,7 @@ static void setColor(Image *img, int x, int y, Color color)
 {
     unsigned char *pixels = (unsigned char *)img->data;
     int offset = (y * img->width + x) * BYTES_PER_PIXEL;
+
     pixels[offset + 0] = color.r;
     pixels[offset + 1] = color.g;
     pixels[offset + 2] = color.b;

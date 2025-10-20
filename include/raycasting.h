@@ -42,6 +42,7 @@
 #define ROTATION_SMOOTHING  0.8f
 
 #define BYTES_PER_PIXEL     4
+#define SHADOW_STRENGHT     0.02f
 
 #define EMPTY       ' '
 #define FLOOR       '0'
