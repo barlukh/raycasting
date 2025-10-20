@@ -3,7 +3,7 @@
 /*  File:       raycasting.h                                                            */
 /*  Purpose:    Main header file of the program                                         */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/17                                                              */
+/*  Updated:    2025/10/20                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -15,6 +15,7 @@
 //------------------------------------------------------------------------------
 
 #include <math.h>
+#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -74,9 +75,9 @@
 #define LEVEL_4     "levels/level4.rcm"
 #define LEVEL_5     "levels/level5.rcm"
 
-#define TEX_CEILING "graphics/texture33.png"
-#define TEX_FLOOR   "graphics/texture21.png"
-#define TEX_WALL    "graphics/texture12.png"
+#define TEX_CEILING "graphics/texture8.png"
+#define TEX_FLOOR   "graphics/texture16.png"
+#define TEX_WALL    "graphics/texture3.png"
 
 //------------------------------------------------------------------------------
 // Type Definitions

@@ -3,15 +3,15 @@
 #   File:       Makefile                                                       #
 #   Purpose:    Main compilation file of the program                           #
 #   Author:     barlukh (Boris Gazur)                                          #
-#   Updated:    2025/10/14                                                     #
+#   Updated:    2025/10/20                                                     #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	raycasting
 
-CC		=	cc
-CFLAGS	=	-Wall -Werror -Wextra -O2 -std=c17 -march=native -flto
-LFLAGS	=	-lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -flto
+CC		=	gcc
+CFLAGS	=	-Wall -Werror -Wextra -O3 -std=c17 -march=native -flto -fopenmp
+LFLAGS	=	-lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -flto -fopenmp
 RM		=	rm -rf
 FLAGS	=	--show-leak-kinds=all \
 			--show-reachable=yes \
