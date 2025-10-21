@@ -15,3 +15,6 @@ When distributing this project, please ensure:
 ## Credits
 
 - raylib © 2013–present Ramon Santamaria
+- https://www.trsearch.org/member/3926 Daggerfall textures by Shadoofus
+
+https://www.spriters-resource.com/profile/madhattervx/ NPC textures

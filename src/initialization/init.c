@@ -3,7 +3,7 @@
 /*  File:       init.c                                                                  */
 /*  Purpose:    Functions for initializing starting values                              */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/17                                                              */
+/*  Updated:    2025/10/21                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -15,10 +15,10 @@ static void initialDraw(void);
 
 int initializeGame(Game *game)
 {
-    if (levelLoad(game) != SUCCESS)
+    if (loadMap(game) != SUCCESS)
         return FAILURE;
 
-    if (levelValidate(game) != SUCCESS)
+    if (validateMap(game) != SUCCESS)
         return FAILURE;
 
     if (initializeScreen(game) != SUCCESS)
@@ -121,7 +121,9 @@ static void initialDraw(void)
     for (int i = 0; i < 4; i++)
     {
         BeginDrawing();
+
         ClearBackground(BLACK);
+
         EndDrawing();
     }
 }

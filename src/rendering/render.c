@@ -3,7 +3,7 @@
 /*  File:       render.c                                                                */
 /*  Purpose:    Rendering functions for raycasting and drawing                          */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/20                                                              */
+/*  Updated:    2025/10/21                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -35,7 +35,7 @@ static void castRayforStripe(int y, Game *game)
     int p = y - (game->screen.height >> 1);
 
     float posZ = 0.5 * game->screen.height;
-    float rowDistance = posZ / p;
+    float rowDistance = (p != 0) ? (posZ / p) : (posZ / 1);
 
     float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / game->screen.width;
     float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / game->screen.width;

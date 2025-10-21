@@ -3,16 +3,16 @@
 /*  File:       raycasting.h                                                            */
 /*  Purpose:    Main header file of the program                                         */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/20                                                              */
+/*  Updated:    2025/10/21                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
 #ifndef RAYCASTING_H
 #define RAYCASTING_H
 
-//------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 // Library Headers
-//------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 
 #include <math.h>
 #include <omp.h>
@@ -21,9 +21,9 @@
 #include <string.h>
 #include "raylib.h"
 
-//------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 // Macro Definitions
-//------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 
 #define TITLE "ray-casting"
 
@@ -53,6 +53,11 @@
 #define PLAYER_W    'W'
 #define VISITED     'v'
 
+#define LEVEL_MAP   "level/map.rcm"
+#define TEX_CEILING "graphics/tiles/texture42.png"
+#define TEX_FLOOR   "graphics/tiles/texture85.png"
+#define TEX_WALL    "graphics/tiles/texture80.png"
+
 #define CLEAN_EXIT      "Program terminated successfully\n"
 #define ERR_FILE_OPEN   "Error: Failed to open file\n"
 #define ERR_FILE_READ   "Error: Failed to read file\n"
@@ -63,26 +68,14 @@
 #define ERR_MAP_PLAYER  "Error: Invalid player position\n"
 #define ERR_MAP_TILE    "Error: Invalid tile character\n"
 #define ERR_MEM_ALLOC   "Error: Memory allocation\n"
-#define ERR_LEVEL_PATH  "Error: Invalid level file path\n"
 #define ERR_SCREEN_DEF  "Error: Invalid default window values\n"
 #define ERR_SCREEN_INIT "Error: Window initialization\n"
 #define ERR_SCREEN_SIZE "Error: Screen size values\n"
 #define ERR_TEX_LOAD    "Error: Failed to load texture\n"
 
-#define LEVEL_0     "levels/level0.rcm"
-#define LEVEL_1     "levels/level1.rcm"
-#define LEVEL_2     "levels/level2.rcm"
-#define LEVEL_3     "levels/level3.rcm"
-#define LEVEL_4     "levels/level4.rcm"
-#define LEVEL_5     "levels/level5.rcm"
-
-#define TEX_CEILING "graphics/texture8.png"
-#define TEX_FLOOR   "graphics/texture16.png"
-#define TEX_WALL    "graphics/texture3.png"
-
-//------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 // Type Definitions
-//------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 
 typedef struct Graphics
 {
@@ -94,7 +87,6 @@ typedef struct Graphics
 typedef struct Level
 {
     char        **map;
-    size_t      index;
 }   Level;
 
 typedef struct Player
@@ -123,9 +115,9 @@ typedef struct Game
     Screen      screen;
 }   Game;
 
-//------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 // Function Prototypes
-//------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 
 void    cleanProgram(const char *errMsg, Game *game);
 char    *copyString(const char *s);
@@ -135,8 +127,8 @@ int     initializeGame(Game *game);
 bool    isPlayerTile(char tile);
 bool    isValidTile(char tile);
 bool    isWalkableTile(char tile);
-int     levelLoad(Game *game);
-int     levelValidate(Game *game);
+int     loadMap(Game *game);
 void    renderFrame(Game *game);
+int     validateMap(Game *game);
 
 #endif
