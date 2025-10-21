@@ -85,32 +85,12 @@ static int initializeGraphics(Game *game)
         return FAILURE;
     }
 
-    game->graphics.ceiling = LoadImage(TEX_CEILING);
-    if (!game->graphics.ceiling.data)
+    if (loadImages(game) != SUCCESS)
     {
         cleanProgram(ERR_IMAGE_LOAD, game);
         CloseWindow();
         return FAILURE;
     }
-    ImageFormat(&game->graphics.ceiling, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
-
-    game->graphics.floor = LoadImage(TEX_FLOOR);
-    if (!game->graphics.floor.data)
-    {
-        cleanProgram(ERR_IMAGE_LOAD, game);
-        CloseWindow();
-        return FAILURE;
-    }
-    ImageFormat(&game->graphics.floor, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
-
-    game->graphics.wall = LoadImage(TEX_WALL);
-    if (!game->graphics.wall.data)
-    {
-        cleanProgram(ERR_IMAGE_LOAD, game);
-        CloseWindow();
-        return FAILURE;
-    }
-    ImageFormat(&game->graphics.wall, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
 
     return SUCCESS;
 }

@@ -61,3 +61,10 @@
    fun:LLVMRunPassManager
    ...
 }
+{
+   GOMP_parallel_leak
+   Memcheck:Leak
+   ...
+   fun:GOMP_parallel
+   ...
+}

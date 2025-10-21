@@ -50,8 +50,11 @@ static void castRayforStripe(int y, Game *game)
         int cellX = (int)(floorX);
         int cellY = (int)(floorY);
 
-        int texX = ((int)(tileTex.width * (floorX - cellX))) % tileTex.width;
-        int texY = ((int)(tileTex.height * (floorY - cellY))) % tileTex.height;
+        float offsetX = floorX - cellX;
+        float offsetY = floorY - cellY;
+
+        int texX = ((int)(offsetX * tileTex.width) + tileTex.width) % tileTex.width;
+        int texY = ((int)(offsetY * tileTex.height) + tileTex.height) % tileTex.height;
 
         floorX += floorStepX;
         floorY += floorStepY;

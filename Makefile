@@ -3,23 +3,23 @@
 #   File:       Makefile                                                       #
 #   Purpose:    Main compilation file of the program                           #
 #   Author:     barlukh (Boris Gazur)                                          #
-#   Updated:    2025/10/20                                                     #
+#   Updated:    2025/10/21                                                     #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	raycasting
 
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra -O3 -std=c17 -march=native -flto -fopenmp
+CFLAGS	=	-Wall -Werror -Wextra -O3 -std=c17 -march=native -flto -fopenmp -g
 LFLAGS	=	-lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -flto -fopenmp
-RM		=	rm -rf
-FLAGS	=	--show-leak-kinds=all \
+VGFLAGS	=	--show-leak-kinds=all \
 			--show-reachable=yes \
 			--leak-check=full \
 			--track-origins=yes \
 			--undef-value-errors=yes \
 			--track-fds=yes \
 			--suppressions=vg.supp
+RM		=	rm -rf
 
 DIR_LIB	=	lib
 DIR_HDR	=	include
@@ -62,6 +62,6 @@ run: $(NAME)
 	./$(NAME)
 
 valgrind: $(NAME)
-	valgrind $(FLAGS) ./$(NAME)
+	valgrind $(VGFLAGS) ./$(NAME)
 
 .PHONY: all clean fclean prepare_dirs re run valgrind

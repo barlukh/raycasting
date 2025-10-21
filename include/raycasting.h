@@ -58,6 +58,19 @@
 #define TEX_FLOOR   "graphics/tiles/texture85.png"
 #define TEX_WALL    "graphics/tiles/texture80.png"
 
+#define SPRITE_MAGE_N   11
+#define SPRITE_MAGE_0   "graphics/sprites/mage0.png"
+#define SPRITE_MAGE_1   "graphics/sprites/mage1.png"
+#define SPRITE_MAGE_2   "graphics/sprites/mage2.png"
+#define SPRITE_MAGE_3   "graphics/sprites/mage3.png"
+#define SPRITE_MAGE_4   "graphics/sprites/mage4.png"
+#define SPRITE_MAGE_5   "graphics/sprites/mage5.png"
+#define SPRITE_MAGE_6   "graphics/sprites/mage6.png"
+#define SPRITE_MAGE_7   "graphics/sprites/mage7.png"
+#define SPRITE_MAGE_8   "graphics/sprites/mage8.png"
+#define SPRITE_MAGE_9   "graphics/sprites/mage9.png"
+#define SPRITE_MAGE_10  "graphics/sprites/mage10.png"
+
 #define CLEAN_EXIT      "Program terminated successfully\n"
 #define ERR_FILE_OPEN   "Error: Failed to open file\n"
 #define ERR_FILE_READ   "Error: Failed to read file\n"
@@ -77,11 +90,17 @@
 // Type Definitions
 //----------------------------------------------------------------------------------------
 
+typedef struct SpriteMage
+{
+    Image       animFrame[SPRITE_MAGE_N];
+}   SpriteMage;
+
 typedef struct Graphics
 {
     Image       ceiling;
     Image       floor;
     Image       wall;
+    SpriteMage  mage;
 }   Graphics;
 
 typedef struct Level
@@ -127,6 +146,7 @@ int     initializeGame(Game *game);
 bool    isPlayerTile(char tile);
 bool    isValidTile(char tile);
 bool    isWalkableTile(char tile);
+int     loadImages(Game *game);
 int     loadMap(Game *game);
 void    renderFrame(Game *game);
 int     validateMap(Game *game);
