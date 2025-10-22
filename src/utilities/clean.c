@@ -3,7 +3,7 @@
 /*  File:       clean.c                                                                 */
 /*  Purpose:    Functions for cleaning up the program resources                         */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/21                                                              */
+/*  Updated:    2025/10/22                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -14,7 +14,13 @@ static void unloadResources(Game *game);
 void cleanProgram(const char *errMsg, Game *game)
 {
     unloadResources(game);
+
     freeMap(game->level.map);
+    free(game->graphics.spriteOrder);
+    free(game->graphics.spriteDistance);
+    free(game->graphics.ZBuffer);
+    free(game->graphics.sprites);
+
     fputs(errMsg, stderr);
 }
 
@@ -43,7 +49,7 @@ static void unloadResources(Game *game)
     UnloadImage(game->graphics.floor);
     UnloadImage(game->graphics.wall);
     
-    for (size_t i = 0; i < SPRITE_MAGE_N; i++)
+    for (size_t i = 0; i < SPRITE_MAGE_FRAMES; i++)
         UnloadImage(game->graphics.mage.animFrame[i]);
     
     UnloadTexture(game->screenTexture);

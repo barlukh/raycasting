@@ -3,7 +3,7 @@
 /*  File:       raycasting.h                                                            */
 /*  Purpose:    Main header file of the program                                         */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/21                                                              */
+/*  Updated:    2025/10/22                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -42,7 +42,7 @@
 #define ROTATION_SMOOTHING  0.8f
 
 #define BYTES_PER_PIXEL     4
-#define SHADOW_STRENGHT     0.02f
+#define SHADOW_STRENGTH     0.04f
 
 #define EMPTY       ' '
 #define FLOOR       '0'
@@ -51,6 +51,7 @@
 #define PLAYER_S    'S'
 #define PLAYER_E    'E'
 #define PLAYER_W    'W'
+#define SPRITE_MAGE 'M'
 #define VISITED     'v'
 
 #define LEVEL_MAP   "level/map.rcm"
@@ -58,7 +59,10 @@
 #define TEX_FLOOR   "graphics/tiles/texture85.png"
 #define TEX_WALL    "graphics/tiles/texture80.png"
 
-#define SPRITE_MAGE_N   11
+#define SPRITE_MAGE_FRAMES  11
+#define SPRITE_MAGE_WIDTH   82
+#define SPRITE_MAGE_HEIGHT  115
+
 #define SPRITE_MAGE_0   "graphics/sprites/mage0.png"
 #define SPRITE_MAGE_1   "graphics/sprites/mage1.png"
 #define SPRITE_MAGE_2   "graphics/sprites/mage2.png"
@@ -90,13 +94,26 @@
 // Type Definitions
 //----------------------------------------------------------------------------------------
 
+typedef struct Sprite
+{
+    double      x;
+    double      y;
+    int         width;
+    int         height;
+    size_t      texture;
+}   Sprite;
+
 typedef struct SpriteMage
 {
-    Image       animFrame[SPRITE_MAGE_N];
+    Image       animFrame[SPRITE_MAGE_FRAMES];
 }   SpriteMage;
 
 typedef struct Graphics
 {
+    int         *spriteOrder;
+    double      *spriteDistance;
+    double      *ZBuffer;
+    Sprite      *sprites;
     Image       ceiling;
     Image       floor;
     Image       wall;
@@ -106,6 +123,7 @@ typedef struct Graphics
 typedef struct Level
 {
     char        **map;
+    size_t      spriteCount;
 }   Level;
 
 typedef struct Player
@@ -138,17 +156,24 @@ typedef struct Game
 // Function Prototypes
 //----------------------------------------------------------------------------------------
 
+int     allocSprites(Game *game);
+void    castRayforColumn(int x, Game *game);
+void    castRayforStripe(int y, Game *game);
 void    cleanProgram(const char *errMsg, Game *game);
 char    *copyString(const char *s);
 void    detectUserInput(Game *game);
+void    drawSprites(Game *game);
 void    freeMap(char **map);
+Color   getColor(Image *img, int x, int y, double distance);
 int     initializeGame(Game *game);
 bool    isPlayerTile(char tile);
+bool    isSpriteTile(char tile);
 bool    isValidTile(char tile);
 bool    isWalkableTile(char tile);
 int     loadImages(Game *game);
 int     loadMap(Game *game);
 void    renderFrame(Game *game);
+void    setColor(Image *img, int x, int y, Color color);
 int     validateMap(Game *game);
 
 #endif

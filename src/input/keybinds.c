@@ -3,7 +3,7 @@
 /*  File:       keybinds.c                                                              */
 /*  Purpose:    Keybinds and user input checking                                        */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/17                                                              */
+/*  Updated:    2025/10/22                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -50,9 +50,9 @@ static void playerMovement(Game *game)
     double nextX = game->player.posX + moveX;
     double nextY = game->player.posY + moveY;
 
-    if (game->level.map[(int)game->player.posY][(int)nextX] != WALL)
+    if (isWalkableTile(game->level.map[(int)game->player.posY][(int)nextX]))
         game->player.posX = nextX;
-    if (game->level.map[(int)nextY][(int)game->player.posX] != WALL)
+    if (isWalkableTile(game->level.map[(int)nextY][(int)game->player.posX]))
         game->player.posY = nextY;
 }
 

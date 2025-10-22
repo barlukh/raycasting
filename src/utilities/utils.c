@@ -3,11 +3,13 @@
 /*  File:       utils.c                                                                 */
 /*  Purpose:    Various utility and helper functions                                    */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/17                                                              */
+/*  Updated:    2025/10/22                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
 #include "raycasting.h"
+
+static bool isMapTile(char tile);
 
 char *copyString(const char *s)
 {
@@ -33,9 +35,17 @@ bool isPlayerTile(char tile)
     return false;
 }
 
+bool isSpriteTile(char tile)
+{
+    if (tile == SPRITE_MAGE)
+        return true;
+
+    return false;
+}
+
 bool isValidTile(char tile)
 {
-    if (tile == EMPTY || tile == FLOOR || tile == WALL || isPlayerTile(tile))
+    if (isMapTile(tile) || isSpriteTile(tile) || isPlayerTile(tile))
         return true;
 
     return false;
@@ -44,6 +54,14 @@ bool isValidTile(char tile)
 bool isWalkableTile(char tile)
 {
     if (tile == FLOOR || isPlayerTile(tile))
+        return true;
+
+    return false;
+}
+
+static bool isMapTile(char tile)
+{
+    if (tile == EMPTY || tile == FLOOR || tile == WALL)
         return true;
 
     return false;

@@ -3,7 +3,7 @@
 /*  File:       load_images.c                                                           */
 /*  Purpose:    Loads .png image files of tiles and sprites                             */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/21                                                              */
+/*  Updated:    2025/10/22                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -51,7 +51,7 @@ static int loadTiles(Game *game)
 
 static int loadSpriteMage(Game *game)
 {
-    char *sprites[SPRITE_MAGE_N] = 
+    char *sprites[SPRITE_MAGE_FRAMES] = 
     {
         SPRITE_MAGE_0,
         SPRITE_MAGE_1,
@@ -66,7 +66,7 @@ static int loadSpriteMage(Game *game)
         SPRITE_MAGE_10
     };
 
-    for (size_t i = 0; i < SPRITE_MAGE_N; i++)
+    for (size_t i = 0; i < SPRITE_MAGE_FRAMES; i++)
     {
         game->graphics.mage.animFrame[i] = LoadImage(sprites[i]);
         if (!game->graphics.mage.animFrame[i].data)

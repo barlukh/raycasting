@@ -3,7 +3,7 @@
 /*  File:       validate_map.c                                                          */
 /*  Purpose:    Validates the content of a loaded map                                   */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/21                                                              */
+/*  Updated:    2025/10/22                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -68,6 +68,9 @@ static int validateTiles(Game *game)
                         return FAILURE;
                 }
             }
+
+            if (isSpriteTile(game->level.map[y][x]))
+                game->level.spriteCount++;
         } 
     }
 
@@ -157,34 +160,34 @@ static char **createTempMap(size_t lineCount, Game *game)
 
 static int floodFill(char **map, char **tempMap, int height, int col, int row)
 {
-	if (row < 0 || row >= height || col < 0 || col >= (int)strlen(map[row]))
-		return (FAILURE);
+    if (row < 0 || row >= height || col < 0 || col >= (int)strlen(map[row]))
+        return (FAILURE);
 
-	if (!map[row] || col >= (int)strlen(map[row]))
-		return (FAILURE);
+    if (!map[row] || col >= (int)strlen(map[row]))
+        return (FAILURE);
 
-	if (tempMap[row][col] == VISITED)
-		return (SUCCESS);
+    if (tempMap[row][col] == VISITED)
+        return (SUCCESS);
 
-	tempMap[row][col] = VISITED;
+    tempMap[row][col] = VISITED;
 
-	if (map[row][col] == WALL)
-		return (SUCCESS);
+    if (map[row][col] == WALL)
+        return (SUCCESS);
 
-	if (map[row][col] == EMPTY)
-		return (FAILURE);
+    if (map[row][col] == EMPTY)
+        return (FAILURE);
 
-	if (!isWalkableTile(map[row][col]) && map[row][col] != EMPTY)
-		return (SUCCESS);
+    if (!isWalkableTile(map[row][col]) && map[row][col] != EMPTY)
+        return (SUCCESS);
 
-	if (floodFill(map, tempMap, height, col - 1, row) != SUCCESS)
-		return (FAILURE);
-	if (floodFill(map, tempMap, height, col + 1, row) != SUCCESS)
-		return (FAILURE);
-	if (floodFill(map, tempMap, height, col, row - 1) != SUCCESS)
-		return (FAILURE);
-	if (floodFill(map, tempMap, height, col, row + 1) != SUCCESS)
-		return (FAILURE);
+    if (floodFill(map, tempMap, height, col - 1, row) != SUCCESS)
+        return (FAILURE);
+    if (floodFill(map, tempMap, height, col + 1, row) != SUCCESS)
+        return (FAILURE);
+    if (floodFill(map, tempMap, height, col, row - 1) != SUCCESS)
+        return (FAILURE);
+    if (floodFill(map, tempMap, height, col, row + 1) != SUCCESS)
+        return (FAILURE);
 
-	return (SUCCESS);
+    return (SUCCESS);
 }
