@@ -10,6 +10,7 @@
 #include "raycasting.h"
 
 static void mapSprites(Game *game);
+static void initMage(size_t pos, Game *game);
 
 int allocSprites(Game *game)
 {
@@ -44,12 +45,18 @@ static void mapSprites(Game *game)
                 game->graphics.sprites[pos].x = x + 0.5;
                 game->graphics.sprites[pos].y = y + 0.5;
                 if (game->level.map[y][x] == SPRITE_MAGE)
-                {
-                    game->graphics.sprites[pos].width = SPRITE_MAGE_WIDTH;
-                    game->graphics.sprites[pos].height = SPRITE_MAGE_HEIGHT;
-                }
+                    initMage(pos, game);
                 pos++;
             }
         }
     }
+}
+
+static void initMage(size_t pos, Game *game)
+{
+    game->graphics.sprites[pos].width = SPRITE_MAGE_WIDTH;
+    game->graphics.sprites[pos].height = SPRITE_MAGE_HEIGHT;
+    game->graphics.sprites[pos].totalFrames = SPRITE_MAGE_FRAMES;
+    game->graphics.sprites[pos].threshold = SPRITE_MAGE_THRESHOLD;
+    game->graphics.sprites[pos].anim = game->graphics.mage.anim;
 }

@@ -11,6 +11,8 @@
 
 void renderFrame(Game *game)
 {
+    updateTimers(game);
+
     #pragma omp parallel for schedule(static, 4)
     for (int y = game->screen.height / 2; y < game->screen.height; y++)
         castRayforStripe(y, game);

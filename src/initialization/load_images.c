@@ -68,10 +68,10 @@ static int loadSpriteMage(Game *game)
 
     for (size_t i = 0; i < SPRITE_MAGE_FRAMES; i++)
     {
-        game->graphics.mage.animFrame[i] = LoadImage(sprites[i]);
-        if (!game->graphics.mage.animFrame[i].data)
+        game->graphics.mage.anim[i] = LoadImage(sprites[i]);
+        if (!game->graphics.mage.anim[i].data)
             return FAILURE;
-        ImageFormat(&game->graphics.mage.animFrame[i], PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
+        ImageFormat(&game->graphics.mage.anim[i], PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
     }
 
     return SUCCESS;

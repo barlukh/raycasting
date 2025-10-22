@@ -84,7 +84,7 @@ void drawSprites(Game *game)
                     int d = (y) * 256 - game->screen.height * 128 + spriteHeight * 128;
                     int texY = ((d * sprite->height) / spriteHeight) / 256;
 
-                    Color sColor = getColor(&game->graphics.mage.animFrame[0], texX, texY, 0);
+                    Color sColor = getColor(&sprite->anim[sprite->frame], texX, texY, transformY);
                     if (sColor.a > 0)
                         setColor(&game->screenImg, stripe, y, sColor);
                 }

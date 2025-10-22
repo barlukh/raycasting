@@ -66,3 +66,18 @@ static bool isMapTile(char tile)
 
     return false;
 }
+
+void updateTimers(Game *game)
+{
+    float frameTime = GetFrameTime();
+    for (size_t i = 0; i < game->level.spriteCount; i++)
+    {
+        Sprite *sprite = &game->graphics.sprites[i];
+        sprite->timer += frameTime;
+        if (sprite->timer >= sprite->threshold)
+        {
+            sprite->frame = (sprite->frame + 1) % sprite->totalFrames;
+            sprite->timer -= sprite->threshold;
+        }
+    }
+}

@@ -42,7 +42,7 @@
 #define ROTATION_SMOOTHING  0.8f
 
 #define BYTES_PER_PIXEL     4
-#define SHADOW_STRENGTH     0.04f
+#define SHADOW_STRENGTH     0.07f
 
 #define EMPTY       ' '
 #define FLOOR       '0'
@@ -59,9 +59,10 @@
 #define TEX_FLOOR   "graphics/tiles/texture85.png"
 #define TEX_WALL    "graphics/tiles/texture80.png"
 
-#define SPRITE_MAGE_FRAMES  11
-#define SPRITE_MAGE_WIDTH   82
-#define SPRITE_MAGE_HEIGHT  115
+#define SPRITE_MAGE_THRESHOLD   0.1f
+#define SPRITE_MAGE_FRAMES      11
+#define SPRITE_MAGE_WIDTH       82
+#define SPRITE_MAGE_HEIGHT      115
 
 #define SPRITE_MAGE_0   "graphics/sprites/mage0.png"
 #define SPRITE_MAGE_1   "graphics/sprites/mage1.png"
@@ -94,19 +95,23 @@
 // Type Definitions
 //----------------------------------------------------------------------------------------
 
+typedef struct SpriteMage
+{
+    Image       anim[SPRITE_MAGE_FRAMES];
+}   SpriteMage;
+
 typedef struct Sprite
 {
     double      x;
     double      y;
     int         width;
     int         height;
-    size_t      texture;
+    int         totalFrames;
+    float       timer;
+    float       threshold;
+    size_t      frame;
+    Image       *anim;
 }   Sprite;
-
-typedef struct SpriteMage
-{
-    Image       animFrame[SPRITE_MAGE_FRAMES];
-}   SpriteMage;
 
 typedef struct Graphics
 {
@@ -174,6 +179,7 @@ int     loadImages(Game *game);
 int     loadMap(Game *game);
 void    renderFrame(Game *game);
 void    setColor(Image *img, int x, int y, Color color);
+void    updateTimers(Game *game);
 int     validateMap(Game *game);
 
 #endif

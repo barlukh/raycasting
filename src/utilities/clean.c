@@ -50,7 +50,7 @@ static void unloadResources(Game *game)
     UnloadImage(game->graphics.wall);
     
     for (size_t i = 0; i < SPRITE_MAGE_FRAMES; i++)
-        UnloadImage(game->graphics.mage.animFrame[i]);
+        UnloadImage(game->graphics.mage.anim[i]);
     
     UnloadTexture(game->screenTexture);
 }
