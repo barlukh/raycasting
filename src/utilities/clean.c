@@ -3,7 +3,7 @@
 /*  File:       clean.c                                                                 */
 /*  Purpose:    Functions for cleaning up the program resources                         */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/22                                                              */
+/*  Updated:    2025/10/23                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -50,7 +50,7 @@ static void unloadResources(Game *game)
     UnloadImage(game->graphics.wall);
     
     for (size_t i = 0; i < SPRITE_MAGE_FRAMES; i++)
-        UnloadImage(game->graphics.mage.anim[i]);
+        UnloadImage(game->graphics.animations.mageFrames[i]);
     
     UnloadTexture(game->screenTexture);
 }

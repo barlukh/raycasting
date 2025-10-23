@@ -3,7 +3,7 @@
 /*  File:       raycast.c                                                               */
 /*  Purpose:    Raycasting logic                                                        */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/22                                                              */
+/*  Updated:    2025/10/23                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -19,7 +19,7 @@ void castRayforStripe(int y, Game *game)
     int p = y - (game->screen.height / 2);
 
     float posZ = 0.5 * game->screen.height;
-    float rowDistance = (p != 0) ? (posZ / p) : (posZ / 1);
+    float rowDistance = posZ / p;
 
     float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / game->screen.width;
     float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / game->screen.width;
@@ -59,20 +59,20 @@ void castRayforStripe(int y, Game *game)
 
 void castRayforColumn(int x, Game *game)
 {
-    double cameraX = 2 * x / (double)game->screen.width - 1;
-    double rayDirX = game->player.dirX + game->player.planeX * cameraX;
-    double rayDirY = game->player.dirY + game->player.planeY * cameraX;
+    float cameraX = 2 * x / (float)game->screen.width - 1;
+    float rayDirX = game->player.dirX + game->player.planeX * cameraX;
+    float rayDirY = game->player.dirY + game->player.planeY * cameraX;
 
     int mapX = (int)(game->player.posX);
     int mapY = (int)(game->player.posY);
 
-    double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
-    double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
+    float deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
+    float deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
 
     int stepX;
     int stepY;
-    double sideDistX;
-    double sideDistY;
+    float sideDistX;
+    float sideDistY;
     if (rayDirX < 0)
     {
         stepX = -1;
@@ -115,7 +115,7 @@ void castRayforColumn(int x, Game *game)
             hit = 1;
     }
 
-    double perpWallDist;
+    float perpWallDist;
     if (side == 0)
         perpWallDist = (sideDistX - deltaDistX);
     else
@@ -131,7 +131,7 @@ void castRayforColumn(int x, Game *game)
     if (drawEnd >= game->screen.height)
         drawEnd = game->screen.height - 1;
 
-    double wallX;
+    float wallX;
     if (side == 0)
         wallX = game->player.posY + perpWallDist * rayDirY;
     else
@@ -140,14 +140,14 @@ void castRayforColumn(int x, Game *game)
 
     Image tileTex = game->graphics.wall;
 
-    int texX = (int)(wallX * (double)(tileTex.width));
+    int texX = (int)(wallX * (float)(tileTex.width));
     if (side == 0 && rayDirX > 0)
         texX = tileTex.width - texX - 1;
     if (side == 1 && rayDirY < 0)
         texX = tileTex.width - texX - 1;
 
-    double step = 1.0 * tileTex.height / lineHeight;
-    double texPos = (drawStart - game->screen.height / 2 + lineHeight / 2) * step;
+    float step = 1.0 * tileTex.height / lineHeight;
+    float texPos = (drawStart - game->screen.height / 2 + lineHeight / 2) * step;
 
     for (int y = drawStart; y < drawEnd; y++)
     {

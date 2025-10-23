@@ -3,7 +3,7 @@
 /*  File:       utils.c                                                                 */
 /*  Purpose:    Various utility and helper functions                                    */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/22                                                              */
+/*  Updated:    2025/10/23                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -76,7 +76,7 @@ void updateTimers(Game *game)
         sprite->timer += frameTime;
         if (sprite->timer >= sprite->threshold)
         {
-            sprite->frame = (sprite->frame + 1) % sprite->totalFrames;
+            sprite->currentFrame = (sprite->currentFrame + 1) % sprite->totalFrames;
             sprite->timer -= sprite->threshold;
         }
     }

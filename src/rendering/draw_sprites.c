@@ -1,9 +1,9 @@
 /* ************************************************************************************ */
 /*                                                                                      */
 /*  File:       draw_sprites.c                                                          */
-/*  Purpose:    Draws sprites on screen in the correct order                          */
+/*  Purpose:    Draws sprites on the screen in the correct order                        */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/22                                                              */
+/*  Updated:    2025/10/23                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -18,8 +18,8 @@ void drawSprites(Game *game)
     {
         game->graphics.spriteOrder[i] = i;
 
-        double dx = game->player.posX - game->graphics.sprites[i].x;
-        double dy = game->player.posY - game->graphics.sprites[i].y;
+        float dx = game->player.posX - game->graphics.sprites[i].x;
+        float dy = game->player.posY - game->graphics.sprites[i].y;
         game->graphics.spriteDistance[i] = dx * dx + dy * dy;
     }
 
@@ -29,27 +29,27 @@ void drawSprites(Game *game)
     {
         int spriteIndex = game->graphics.spriteOrder[i];
         Sprite *sprite = &game->graphics.sprites[spriteIndex];
-        double spriteWorldX = sprite->x;
-        double spriteWorldY = sprite->y;
+        float spriteWorldX = sprite->x;
+        float spriteWorldY = sprite->y;
 
-        double spriteX = spriteWorldX - game->player.posX;
-        double spriteY = spriteWorldY - game->player.posY;
+        float spriteX = spriteWorldX - game->player.posX;
+        float spriteY = spriteWorldY - game->player.posY;
 
-        double term1 = game->player.planeX * game->player.dirY;
-        double term2 = game->player.dirX * game->player.planeY;
-        double determinant = term1 - term2;
-        double invDet = 1.0 / determinant;
+        float term1 = game->player.planeX * game->player.dirY;
+        float term2 = game->player.dirX * game->player.planeY;
+        float determinant = term1 - term2;
+        float invDet = 1.0 / determinant;
 
-        double termX1 = game->player.dirY * spriteX;
-        double termX2 = game->player.dirX * spriteY;
-        double transformX = invDet * (termX1 - termX2);
+        float termX1 = game->player.dirY * spriteX;
+        float termX2 = game->player.dirX * spriteY;
+        float transformX = invDet * (termX1 - termX2);
 
-        double termY1 = -game->player.planeY * spriteX;
-        double termY2 = game->player.planeX * spriteY;
-        double transformY = invDet * (termY1 + termY2);
+        float termY1 = -game->player.planeY * spriteX;
+        float termY2 = game->player.planeX * spriteY;
+        float transformY = invDet * (termY1 + termY2);
 
         int screenCenterX = game->screen.width / 2;
-        double perspectiveRatio = transformX / transformY;
+        float perspectiveRatio = transformX / transformY;
         int spriteScreenX = (int)(screenCenterX * (1 + perspectiveRatio));
 
         int spriteHeight = abs((int)(game->screen.height / transformY));
@@ -68,23 +68,25 @@ void drawSprites(Game *game)
         if (drawEndX >= game->screen.width)
             drawEndX = game->screen.width - 1;
 
+        #pragma omp parallel for schedule(static, 4)
         for (int stripe = drawStartX; stripe < drawEndX; stripe++)
         {
-            int spriteLeft = spriteScreenX - spriteWidth / 2;
+            int spriteLeft = spriteScreenX - (spriteWidth >> 1);
             int relativeStripe = stripe - spriteLeft;
 
-            int scaledTexX = 256 * relativeStripe * sprite->width / spriteWidth;
-            int texX = scaledTexX / 256;
+            int scaledTexX = (relativeStripe << 8) * sprite->width / spriteWidth;
+            int texX = scaledTexX >> 8;
 
             if (transformY > 0 && stripe > 0 && stripe < game->screen.width
                 && transformY < game->graphics.ZBuffer[stripe])
             {
                 for (int y = drawStartY; y < drawEndY; y++)
                 {
-                    int d = (y) * 256 - game->screen.height * 128 + spriteHeight * 128;
-                    int texY = ((d * sprite->height) / spriteHeight) / 256;
+                    int d = (y << 8) - (game->screen.height << 7) + (spriteHeight << 7);
+                    int texY = ((d * sprite->height) / spriteHeight) >> 8;
 
-                    Color sColor = getColor(&sprite->anim[sprite->frame], texX, texY, transformY);
+                    Image *currentFrame = &sprite->animation[sprite->currentFrame];
+                    Color sColor = getColor(currentFrame, texX, texY, transformY);
                     if (sColor.a > 0)
                         setColor(&game->screenImg, stripe, y, sColor);
                 }
@@ -101,7 +103,7 @@ static void	sortSprites(Game *game)
         {        
             if (game->graphics.spriteDistance[i] < game->graphics.spriteDistance[j])
             {
-                double tempDist = game->graphics.spriteDistance[i];
+                float tempDist = game->graphics.spriteDistance[i];
                 game->graphics.spriteDistance[i] = game->graphics.spriteDistance[j];
                 game->graphics.spriteDistance[j] = tempDist;
 

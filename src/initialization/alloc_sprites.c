@@ -3,7 +3,7 @@
 /*  File:       alloc_sprites.c                                                         */
 /*  Purpose:    Allocates arrays for sprite rendering                                   */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/22                                                              */
+/*  Updated:    2025/10/23                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -15,8 +15,8 @@ static void initMage(size_t pos, Game *game);
 int allocSprites(Game *game)
 {
     game->graphics.spriteOrder = calloc(game->level.spriteCount, sizeof(int));
-    game->graphics.spriteDistance = calloc(game->level.spriteCount, sizeof(double));
-    game->graphics.ZBuffer = calloc(game->screen.width, sizeof(double));
+    game->graphics.spriteDistance = calloc(game->level.spriteCount, sizeof(float));
+    game->graphics.ZBuffer = calloc(game->screen.width, sizeof(float));
     game->graphics.sprites = calloc(game->level.spriteCount, sizeof(Sprite));
 
     if (!game->graphics.sprites || !game->graphics.spriteOrder
@@ -58,5 +58,5 @@ static void initMage(size_t pos, Game *game)
     game->graphics.sprites[pos].height = SPRITE_MAGE_HEIGHT;
     game->graphics.sprites[pos].totalFrames = SPRITE_MAGE_FRAMES;
     game->graphics.sprites[pos].threshold = SPRITE_MAGE_THRESHOLD;
-    game->graphics.sprites[pos].anim = game->graphics.mage.anim;
+    game->graphics.sprites[pos].animation = game->graphics.animations.mageFrames;
 }

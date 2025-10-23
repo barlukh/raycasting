@@ -3,7 +3,7 @@
 /*  File:       load_images.c                                                           */
 /*  Purpose:    Loads .png image files of tiles and sprites                             */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/22                                                              */
+/*  Updated:    2025/10/23                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -25,21 +25,21 @@ int loadImages(Game *game)
 
 static int loadTiles(Game *game)
 {
-    game->graphics.ceiling = LoadImage(TEX_CEILING);
+    game->graphics.ceiling = LoadImage(TEXTURE_CEILING);
     if (!game->graphics.ceiling.data)
         return FAILURE;
     ImageFormat(&game->graphics.ceiling, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
     if (!game->graphics.ceiling.data)
         return FAILURE;
 
-    game->graphics.floor = LoadImage(TEX_FLOOR);
+    game->graphics.floor = LoadImage(TEXTURE_FLOOR);
     if (!game->graphics.floor.data)
         return FAILURE;
     ImageFormat(&game->graphics.floor, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
     if (!game->graphics.ceiling.data)
         return FAILURE;
 
-    game->graphics.wall = LoadImage(TEX_WALL);
+    game->graphics.wall = LoadImage(TEXTURE_WALL);
     if (!game->graphics.wall.data)
         return FAILURE;
     ImageFormat(&game->graphics.wall, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
@@ -68,10 +68,10 @@ static int loadSpriteMage(Game *game)
 
     for (size_t i = 0; i < SPRITE_MAGE_FRAMES; i++)
     {
-        game->graphics.mage.anim[i] = LoadImage(sprites[i]);
-        if (!game->graphics.mage.anim[i].data)
+        game->graphics.animations.mageFrames[i] = LoadImage(sprites[i]);
+        if (!game->graphics.animations.mageFrames[i].data)
             return FAILURE;
-        ImageFormat(&game->graphics.mage.anim[i], PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
+        ImageFormat(&game->graphics.animations.mageFrames[i], PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
     }
 
     return SUCCESS;

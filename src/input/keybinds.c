@@ -3,7 +3,7 @@
 /*  File:       keybinds.c                                                              */
 /*  Purpose:    Keybinds and user input checking                                        */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/22                                                              */
+/*  Updated:    2025/10/23                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -20,8 +20,8 @@ void detectUserInput(Game *game)
 
 static void playerMovement(Game *game)
 {
-    double moveX = 0, moveY = 0;
-    double speed = GetFrameTime() * MOVEMENT_SPEED;
+    float moveX = 0, moveY = 0;
+    float speed = GetFrameTime() * MOVEMENT_SPEED;
 
     if (IsKeyDown(KEY_W))
     {
@@ -47,8 +47,8 @@ static void playerMovement(Game *game)
         moveY += game->player.planeY * speed;
     }
 
-    double nextX = game->player.posX + moveX;
-    double nextY = game->player.posY + moveY;
+    float nextX = game->player.posX + moveX;
+    float nextY = game->player.posY + moveY;
 
     if (isWalkableTile(game->level.map[(int)game->player.posY][(int)nextX]))
         game->player.posX = nextX;

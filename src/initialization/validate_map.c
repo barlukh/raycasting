@@ -3,7 +3,7 @@
 /*  File:       validate_map.c                                                          */
 /*  Purpose:    Validates the content of a loaded map                                   */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/22                                                              */
+/*  Updated:    2025/10/23                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -85,8 +85,8 @@ static int validateTiles(Game *game)
 
 static int setPlayer(char tile, size_t x, size_t y, Game *game)
 {
-    game->player.posX = (double)x + 0.5;
-    game->player.posY = (double)y + 0.5;
+    game->player.posX = (float)x + 0.5;
+    game->player.posY = (float)y + 0.5;
 
     switch (tile)
     {

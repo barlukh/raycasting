@@ -3,7 +3,7 @@
 /*  File:       raycasting.h                                                            */
 /*  Purpose:    Main header file of the program                                         */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/22                                                              */
+/*  Updated:    2025/10/23                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -42,7 +42,7 @@
 #define ROTATION_SMOOTHING  0.8f
 
 #define BYTES_PER_PIXEL     4
-#define SHADOW_STRENGTH     0.07f
+#define SHADOW_STRENGTH     0.05f
 
 #define EMPTY       ' '
 #define FLOOR       '0'
@@ -54,10 +54,10 @@
 #define SPRITE_MAGE 'M'
 #define VISITED     'v'
 
-#define LEVEL_MAP   "level/map.rcm"
-#define TEX_CEILING "graphics/tiles/texture42.png"
-#define TEX_FLOOR   "graphics/tiles/texture85.png"
-#define TEX_WALL    "graphics/tiles/texture80.png"
+#define LEVEL_MAP       "level/map.rcm"
+#define TEXTURE_CEILING "graphics/tiles/texture42.png"
+#define TEXTURE_FLOOR   "graphics/tiles/texture85.png"
+#define TEXTURE_WALL    "graphics/tiles/texture80.png"
 
 #define SPRITE_MAGE_THRESHOLD   0.1f
 #define SPRITE_MAGE_FRAMES      11
@@ -95,34 +95,34 @@
 // Type Definitions
 //----------------------------------------------------------------------------------------
 
-typedef struct SpriteMage
+typedef struct Animations
 {
-    Image       anim[SPRITE_MAGE_FRAMES];
-}   SpriteMage;
+    Image       mageFrames[SPRITE_MAGE_FRAMES];
+}   Animations;
 
 typedef struct Sprite
 {
-    double      x;
-    double      y;
+    float       x;
+    float       y;
     int         width;
     int         height;
     int         totalFrames;
     float       timer;
     float       threshold;
-    size_t      frame;
-    Image       *anim;
+    size_t      currentFrame;
+    Image       *animation;
 }   Sprite;
 
 typedef struct Graphics
 {
     int         *spriteOrder;
-    double      *spriteDistance;
-    double      *ZBuffer;
+    float       *spriteDistance;
+    float       *ZBuffer;
     Sprite      *sprites;
     Image       ceiling;
     Image       floor;
     Image       wall;
-    SpriteMage  mage;
+    Animations  animations;
 }   Graphics;
 
 typedef struct Level
@@ -133,12 +133,12 @@ typedef struct Level
 
 typedef struct Player
 {
-    double      posX;
-    double      posY;
-    double      dirX;
-    double      dirY;
-    double      planeX;
-    double      planeY;
+    float       posX;
+    float       posY;
+    float       dirX;
+    float       dirY;
+    float       planeX;
+    float       planeY;
 }   Player;
 
 typedef struct Screen
@@ -169,7 +169,7 @@ char    *copyString(const char *s);
 void    detectUserInput(Game *game);
 void    drawSprites(Game *game);
 void    freeMap(char **map);
-Color   getColor(Image *img, int x, int y, double distance);
+Color   getColor(Image *img, int x, int y, float distance);
 int     initializeGame(Game *game);
 bool    isPlayerTile(char tile);
 bool    isSpriteTile(char tile);
