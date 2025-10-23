@@ -84,3 +84,15 @@ When distributing this project, please ensure:
 <p align="center">
   <img src="graphics/screenshots/screenshot3.png" style="max-width:100%; height:auto;" alt="screenshot3"/>
 </p>
+
+<p align="center">
+  <img src="graphics/screenshots/screenshot4.png" style="max-width:100%; height:auto;" alt="screenshot4"/>
+</p>
+
+<p align="center">
+  <img src="graphics/screenshots/screenshot5.png" style="max-width:100%; height:auto;" alt="screenshot5"/>
+</p>
+
+<p align="center">
+  <img src="graphics/screenshots/screenshot6.png" style="max-width:100%; height:auto;" alt="screenshot6"/>
+</p>

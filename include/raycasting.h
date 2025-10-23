@@ -25,7 +25,7 @@
 // Macro Definitions
 //----------------------------------------------------------------------------------------
 
-#define TITLE "ray-casting"
+#define TITLE "raycasting"
 
 #define DEFAULT_SCREEN_WIDTH    800
 #define DEFAULT_SCREEN_HEIGHT   600
