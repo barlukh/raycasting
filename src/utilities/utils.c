@@ -37,7 +37,7 @@ bool isPlayerTile(char tile)
 
 bool isSpriteTile(char tile)
 {
-    if (tile == SPRITE_MAGE)
+    if (tile == SPRITE_MAGE || tile == SPRITE_MYSTIC || tile == SPRITE_SMITH)
         return true;
 
     return false;
@@ -74,10 +74,10 @@ void updateTimers(Game *game)
     {
         Sprite *sprite = &game->graphics.sprites[i];
         sprite->timer += frameTime;
-        if (sprite->timer >= sprite->threshold)
+        if (sprite->timer >= sprite->frameThreshold)
         {
             sprite->currentFrame = (sprite->currentFrame + 1) % sprite->totalFrames;
-            sprite->timer -= sprite->threshold;
+            sprite->timer -= sprite->frameThreshold;
         }
     }
 }

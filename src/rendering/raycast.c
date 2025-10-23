@@ -158,5 +158,7 @@ void castRayforColumn(int x, Game *game)
 
         setColor(&game->screenImg, x, y, wColor);
     }
-    game->graphics.ZBuffer[x] = perpWallDist;
+
+    if (game->level.spriteCount > 0)
+        game->graphics.ZBuffer[x] = perpWallDist;
 }

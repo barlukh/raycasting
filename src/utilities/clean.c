@@ -51,6 +51,12 @@ static void unloadResources(Game *game)
     
     for (size_t i = 0; i < SPRITE_MAGE_FRAMES; i++)
         UnloadImage(game->graphics.animations.mageFrames[i]);
-    
+
+    for (size_t i = 0; i < SPRITE_MYSTIC_FRAMES; i++)
+        UnloadImage(game->graphics.animations.mysticFrames[i]);
+
+    for (size_t i = 0; i < SPRITE_SMITH_FRAMES; i++)
+        UnloadImage(game->graphics.animations.smithFrames[i]);
+
     UnloadTexture(game->screenTexture);
 }

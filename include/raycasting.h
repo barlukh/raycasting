@@ -44,15 +44,17 @@
 #define BYTES_PER_PIXEL     4
 #define SHADOW_STRENGTH     0.05f
 
-#define EMPTY       ' '
-#define FLOOR       '0'
-#define WALL        '1'
-#define PLAYER_N    'N'
-#define PLAYER_S    'S'
-#define PLAYER_E    'E'
-#define PLAYER_W    'W'
-#define SPRITE_MAGE 'M'
-#define VISITED     'v'
+#define EMPTY           ' '
+#define FLOOR           '0'
+#define WALL            '1'
+#define PLAYER_N        'N'
+#define PLAYER_S        'S'
+#define PLAYER_E        'E'
+#define PLAYER_W        'W'
+#define SPRITE_MAGE     'M'
+#define SPRITE_MYSTIC   'Y'
+#define SPRITE_SMITH    'B'
+#define VISITED         'v'
 
 #define LEVEL_MAP       "level/map.rcm"
 #define TEXTURE_CEILING "graphics/tiles/texture42.png"
@@ -63,6 +65,16 @@
 #define SPRITE_MAGE_FRAMES      11
 #define SPRITE_MAGE_WIDTH       82
 #define SPRITE_MAGE_HEIGHT      115
+
+#define SPRITE_MYSTIC_THRESHOLD 0.4f
+#define SPRITE_MYSTIC_FRAMES    11
+#define SPRITE_MYSTIC_WIDTH     70
+#define SPRITE_MYSTIC_HEIGHT    94
+
+#define SPRITE_SMITH_THRESHOLD   0.12f
+#define SPRITE_SMITH_FRAMES      5
+#define SPRITE_SMITH_WIDTH       126
+#define SPRITE_SMITH_HEIGHT      130
 
 #define SPRITE_MAGE_0   "graphics/sprites/mage0.png"
 #define SPRITE_MAGE_1   "graphics/sprites/mage1.png"
@@ -75,6 +87,24 @@
 #define SPRITE_MAGE_8   "graphics/sprites/mage8.png"
 #define SPRITE_MAGE_9   "graphics/sprites/mage9.png"
 #define SPRITE_MAGE_10  "graphics/sprites/mage10.png"
+
+#define SPRITE_MYSTIC_0   "graphics/sprites/mystic0.png"
+#define SPRITE_MYSTIC_1   "graphics/sprites/mystic1.png"
+#define SPRITE_MYSTIC_2   "graphics/sprites/mystic2.png"
+#define SPRITE_MYSTIC_3   "graphics/sprites/mystic3.png"
+#define SPRITE_MYSTIC_4   "graphics/sprites/mystic4.png"
+#define SPRITE_MYSTIC_5   "graphics/sprites/mystic5.png"
+#define SPRITE_MYSTIC_6   "graphics/sprites/mystic6.png"
+#define SPRITE_MYSTIC_7   "graphics/sprites/mystic7.png"
+#define SPRITE_MYSTIC_8   "graphics/sprites/mystic8.png"
+#define SPRITE_MYSTIC_9   "graphics/sprites/mystic9.png"
+#define SPRITE_MYSTIC_10  "graphics/sprites/mystic10.png"
+
+#define SPRITE_SMITH_0   "graphics/sprites/smith0.png"
+#define SPRITE_SMITH_1   "graphics/sprites/smith1.png"
+#define SPRITE_SMITH_2   "graphics/sprites/smith2.png"
+#define SPRITE_SMITH_3   "graphics/sprites/smith3.png"
+#define SPRITE_SMITH_4   "graphics/sprites/smith4.png"
 
 #define CLEAN_EXIT      "Program terminated successfully\n"
 #define ERR_FILE_OPEN   "Error: Failed to open file\n"
@@ -98,6 +128,8 @@
 typedef struct Animations
 {
     Image       mageFrames[SPRITE_MAGE_FRAMES];
+    Image       mysticFrames[SPRITE_MYSTIC_FRAMES];
+    Image       smithFrames[SPRITE_SMITH_FRAMES];
 }   Animations;
 
 typedef struct Sprite
@@ -108,7 +140,7 @@ typedef struct Sprite
     int         height;
     int         totalFrames;
     float       timer;
-    float       threshold;
+    float       frameThreshold;
     size_t      currentFrame;
     Image       *animation;
 }   Sprite;

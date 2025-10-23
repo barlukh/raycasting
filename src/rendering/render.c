@@ -3,7 +3,7 @@
 /*  File:       render.c                                                                */
 /*  Purpose:    Main rendering loop                                                     */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/22                                                              */
+/*  Updated:    2025/10/23                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -21,5 +21,6 @@ void renderFrame(Game *game)
     for (int x = 0; x < game->screen.width; x++)
         castRayforColumn(x, game);
 
-    drawSprites(game);
+    if (game->level.spriteCount > 0)
+        drawSprites(game);
 }
