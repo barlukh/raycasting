@@ -62,8 +62,8 @@ When distributing this project, please ensure:
 
 - [raylib](https://www.raylib.com/) raylib © 2013–present Ramon Santamaria
 - [Shadoofus](https://www.trsearch.org/member/3926) Tile textures
-- [madhattervx](https://www.spriters-resource.com/profile/madhattervx/) NPC sprite textures
-
+- [madhattervx](https://www.spriters-resource.com/profile/madhattervx/) Sprite textures
+- [Lumpy Spirit](https://www.spriters-resource.com/profile/lumpy+spirit/) Sprite textures
 
 ## Known Issues
 

@@ -3,7 +3,7 @@
 /*  File:       utils.c                                                                 */
 /*  Purpose:    Various utility and helper functions                                    */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/23                                                              */
+/*  Updated:    2025/10/24                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -37,7 +37,8 @@ bool isPlayerTile(char tile)
 
 bool isSpriteTile(char tile)
 {
-    if (tile == SPRITE_MAGE || tile == SPRITE_MYSTIC || tile == SPRITE_SMITH)
+    if (tile == SPRITE_MAGE || tile == SPRITE_MYSTIC || tile == SPRITE_SMITH
+        || tile == SPRITE_SKELWALK)
         return true;
 
     return false;

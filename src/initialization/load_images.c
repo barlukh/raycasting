@@ -3,7 +3,7 @@
 /*  File:       load_images.c                                                           */
 /*  Purpose:    Loads .png image files of tiles and sprites                             */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/23                                                              */
+/*  Updated:    2025/10/24                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -13,6 +13,7 @@ static int loadTiles(Game *game);
 static int loadSpriteMage(Game *game);
 static int loadSpriteMystic(Game *game);
 static int loadSpriteSmith(Game *game);
+static int loadSpriteSkelWalk(Game *game);
 
 int loadImages(Game *game)
 {
@@ -26,6 +27,9 @@ int loadImages(Game *game)
         return FAILURE;
 
     if (loadSpriteSmith(game) != SUCCESS)
+        return FAILURE;
+
+    if (loadSpriteSkelWalk(game) != SUCCESS)
         return FAILURE;
 
     return SUCCESS;
@@ -130,6 +134,31 @@ static int loadSpriteSmith(Game *game)
         if (!game->graphics.animations.smithFrames[i].data)
             return FAILURE;
         ImageFormat(&game->graphics.animations.smithFrames[i], PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
+    }
+
+    return SUCCESS;
+}
+
+static int loadSpriteSkelWalk(Game *game)
+{
+    char *sprites[SPRITE_SKELWALK_FRAMES] = 
+    {
+        SPRITE_SKELWALK_0,
+        SPRITE_SKELWALK_1,
+        SPRITE_SKELWALK_2,
+        SPRITE_SKELWALK_3,
+        SPRITE_SKELWALK_4,
+        SPRITE_SKELWALK_5,
+        SPRITE_SKELWALK_6,
+        SPRITE_SKELWALK_7
+    };
+
+    for (size_t i = 0; i < SPRITE_SKELWALK_FRAMES; i++)
+    {
+        game->graphics.animations.skelWalkFrames[i] = LoadImage(sprites[i]);
+        if (!game->graphics.animations.skelWalkFrames[i].data)
+            return FAILURE;
+        ImageFormat(&game->graphics.animations.skelWalkFrames[i], PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
     }
 
     return SUCCESS;

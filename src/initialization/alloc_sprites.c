@@ -3,7 +3,7 @@
 /*  File:       alloc_sprites.c                                                         */
 /*  Purpose:    Allocates arrays for sprite rendering                                   */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/23                                                              */
+/*  Updated:    2025/10/24                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -13,6 +13,7 @@ static void mapSprites(Game *game);
 static void initMage(size_t pos, Game *game);
 static void initMystic(size_t pos, Game *game);
 static void initSmith(size_t pos, Game *game);
+static void initSkelWalk(size_t pos, Game *game);
 
 int allocSprites(Game *game)
 {
@@ -55,6 +56,8 @@ static void mapSprites(Game *game)
                     initMystic(pos, game);
                 else if (game->level.map[y][x] == SPRITE_SMITH)
                     initSmith(pos, game);
+                else if (game->level.map[y][x] == SPRITE_SKELWALK)
+                    initSkelWalk(pos, game);
                 pos++;
             }
         }
@@ -89,4 +92,14 @@ static void initSmith(size_t pos, Game *game)
     game->graphics.sprites[pos].frameThreshold = SPRITE_SMITH_THRESHOLD;
     game->graphics.sprites[pos].currentFrame = rand() % SPRITE_SMITH_FRAMES;
     game->graphics.sprites[pos].animation = game->graphics.animations.smithFrames;
+}
+
+static void initSkelWalk(size_t pos, Game *game)
+{
+    game->graphics.sprites[pos].width = SPRITE_SKELWALK_WIDTH;
+    game->graphics.sprites[pos].height = SPRITE_SKELWALK_HEIGHT;
+    game->graphics.sprites[pos].totalFrames = SPRITE_SKELWALK_FRAMES;
+    game->graphics.sprites[pos].frameThreshold = SPRITE_SKELWALK_THRESHOLD;
+    game->graphics.sprites[pos].currentFrame = rand() % SPRITE_SKELWALK_FRAMES;
+    game->graphics.sprites[pos].animation = game->graphics.animations.skelWalkFrames;
 }

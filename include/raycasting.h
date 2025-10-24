@@ -3,7 +3,7 @@
 /*  File:       raycasting.h                                                            */
 /*  Purpose:    Main header file of the program                                         */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/23                                                              */
+/*  Updated:    2025/10/24                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -54,6 +54,7 @@
 #define SPRITE_MAGE     'M'
 #define SPRITE_MYSTIC   'Y'
 #define SPRITE_SMITH    'B'
+#define SPRITE_SKELWALK 'K'
 #define VISITED         'v'
 
 #define LEVEL_MAP       "level/map.rcm"
@@ -61,50 +62,64 @@
 #define TEXTURE_FLOOR   "graphics/tiles/texture85.png"
 #define TEXTURE_WALL    "graphics/tiles/texture80.png"
 
-#define SPRITE_MAGE_THRESHOLD   0.1f
-#define SPRITE_MAGE_FRAMES      11
-#define SPRITE_MAGE_WIDTH       82
-#define SPRITE_MAGE_HEIGHT      115
+#define SPRITE_MAGE_THRESHOLD       0.1f
+#define SPRITE_MAGE_FRAMES          11
+#define SPRITE_MAGE_WIDTH           82
+#define SPRITE_MAGE_HEIGHT          115
 
-#define SPRITE_MYSTIC_THRESHOLD 0.4f
-#define SPRITE_MYSTIC_FRAMES    11
-#define SPRITE_MYSTIC_WIDTH     70
-#define SPRITE_MYSTIC_HEIGHT    94
+#define SPRITE_MYSTIC_THRESHOLD     0.4f
+#define SPRITE_MYSTIC_FRAMES        11
+#define SPRITE_MYSTIC_WIDTH         70
+#define SPRITE_MYSTIC_HEIGHT        94
 
-#define SPRITE_SMITH_THRESHOLD   0.12f
-#define SPRITE_SMITH_FRAMES      5
-#define SPRITE_SMITH_WIDTH       126
-#define SPRITE_SMITH_HEIGHT      130
+#define SPRITE_SMITH_THRESHOLD      0.12f
+#define SPRITE_SMITH_FRAMES         5
+#define SPRITE_SMITH_WIDTH          126
+#define SPRITE_SMITH_HEIGHT         130
 
-#define SPRITE_MAGE_0   "graphics/sprites/mage0.png"
-#define SPRITE_MAGE_1   "graphics/sprites/mage1.png"
-#define SPRITE_MAGE_2   "graphics/sprites/mage2.png"
-#define SPRITE_MAGE_3   "graphics/sprites/mage3.png"
-#define SPRITE_MAGE_4   "graphics/sprites/mage4.png"
-#define SPRITE_MAGE_5   "graphics/sprites/mage5.png"
-#define SPRITE_MAGE_6   "graphics/sprites/mage6.png"
-#define SPRITE_MAGE_7   "graphics/sprites/mage7.png"
-#define SPRITE_MAGE_8   "graphics/sprites/mage8.png"
-#define SPRITE_MAGE_9   "graphics/sprites/mage9.png"
-#define SPRITE_MAGE_10  "graphics/sprites/mage10.png"
+#define SPRITE_SKELWALK_THRESHOLD   0.12f
+#define SPRITE_SKELWALK_FRAMES      8
+#define SPRITE_SKELWALK_WIDTH       130
+#define SPRITE_SKELWALK_HEIGHT      140
 
-#define SPRITE_MYSTIC_0   "graphics/sprites/mystic0.png"
-#define SPRITE_MYSTIC_1   "graphics/sprites/mystic1.png"
-#define SPRITE_MYSTIC_2   "graphics/sprites/mystic2.png"
-#define SPRITE_MYSTIC_3   "graphics/sprites/mystic3.png"
-#define SPRITE_MYSTIC_4   "graphics/sprites/mystic4.png"
-#define SPRITE_MYSTIC_5   "graphics/sprites/mystic5.png"
-#define SPRITE_MYSTIC_6   "graphics/sprites/mystic6.png"
-#define SPRITE_MYSTIC_7   "graphics/sprites/mystic7.png"
-#define SPRITE_MYSTIC_8   "graphics/sprites/mystic8.png"
-#define SPRITE_MYSTIC_9   "graphics/sprites/mystic9.png"
-#define SPRITE_MYSTIC_10  "graphics/sprites/mystic10.png"
+#define SPRITE_MAGE_0       "graphics/sprites/mage0.png"
+#define SPRITE_MAGE_1       "graphics/sprites/mage1.png"
+#define SPRITE_MAGE_2       "graphics/sprites/mage2.png"
+#define SPRITE_MAGE_3       "graphics/sprites/mage3.png"
+#define SPRITE_MAGE_4       "graphics/sprites/mage4.png"
+#define SPRITE_MAGE_5       "graphics/sprites/mage5.png"
+#define SPRITE_MAGE_6       "graphics/sprites/mage6.png"
+#define SPRITE_MAGE_7       "graphics/sprites/mage7.png"
+#define SPRITE_MAGE_8       "graphics/sprites/mage8.png"
+#define SPRITE_MAGE_9       "graphics/sprites/mage9.png"
+#define SPRITE_MAGE_10      "graphics/sprites/mage10.png"
 
-#define SPRITE_SMITH_0   "graphics/sprites/smith0.png"
-#define SPRITE_SMITH_1   "graphics/sprites/smith1.png"
-#define SPRITE_SMITH_2   "graphics/sprites/smith2.png"
-#define SPRITE_SMITH_3   "graphics/sprites/smith3.png"
-#define SPRITE_SMITH_4   "graphics/sprites/smith4.png"
+#define SPRITE_MYSTIC_0     "graphics/sprites/mystic0.png"
+#define SPRITE_MYSTIC_1     "graphics/sprites/mystic1.png"
+#define SPRITE_MYSTIC_2     "graphics/sprites/mystic2.png"
+#define SPRITE_MYSTIC_3     "graphics/sprites/mystic3.png"
+#define SPRITE_MYSTIC_4     "graphics/sprites/mystic4.png"
+#define SPRITE_MYSTIC_5     "graphics/sprites/mystic5.png"
+#define SPRITE_MYSTIC_6     "graphics/sprites/mystic6.png"
+#define SPRITE_MYSTIC_7     "graphics/sprites/mystic7.png"
+#define SPRITE_MYSTIC_8     "graphics/sprites/mystic8.png"
+#define SPRITE_MYSTIC_9     "graphics/sprites/mystic9.png"
+#define SPRITE_MYSTIC_10    "graphics/sprites/mystic10.png"
+
+#define SPRITE_SMITH_0      "graphics/sprites/smith0.png"
+#define SPRITE_SMITH_1      "graphics/sprites/smith1.png"
+#define SPRITE_SMITH_2      "graphics/sprites/smith2.png"
+#define SPRITE_SMITH_3      "graphics/sprites/smith3.png"
+#define SPRITE_SMITH_4      "graphics/sprites/smith4.png"
+
+#define SPRITE_SKELWALK_0   "graphics/sprites/skelWalk0.png"
+#define SPRITE_SKELWALK_1   "graphics/sprites/skelWalk1.png"
+#define SPRITE_SKELWALK_2   "graphics/sprites/skelWalk2.png"
+#define SPRITE_SKELWALK_3   "graphics/sprites/skelWalk3.png"
+#define SPRITE_SKELWALK_4   "graphics/sprites/skelWalk4.png"
+#define SPRITE_SKELWALK_5   "graphics/sprites/skelWalk5.png"
+#define SPRITE_SKELWALK_6   "graphics/sprites/skelWalk6.png"
+#define SPRITE_SKELWALK_7   "graphics/sprites/skelWalk7.png"
 
 #define CLEAN_EXIT      "Program terminated successfully\n"
 #define ERR_FILE_OPEN   "Error: Failed to open file\n"
@@ -130,6 +145,7 @@ typedef struct Animations
     Image       mageFrames[SPRITE_MAGE_FRAMES];
     Image       mysticFrames[SPRITE_MYSTIC_FRAMES];
     Image       smithFrames[SPRITE_SMITH_FRAMES];
+    Image       skelWalkFrames[SPRITE_SKELWALK_FRAMES];
 }   Animations;
 
 typedef struct Sprite
