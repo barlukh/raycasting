@@ -1,7 +1,7 @@
 /* ************************************************************************************ */
 /*                                                                                      */
 /*  File:       draw_sprites.c                                                          */
-/*  Purpose:    Drawing of sprites on the screen in the correct order                   */
+/*  Purpose:    Drsprite on the screen in the correct order                   */
 /*  Author:     barlukh (Boris Gazur)                                                   */
 /*  Updated:    2025/10/27                                                              */
 /*                                                                                      */
@@ -18,8 +18,8 @@ void drawSprites(Game *game)
     {
         game->graphics.spriteOrder[i] = i;
 
-        float dx = game->player.posX - game->graphics.sprites[i].x;
-        float dy = game->player.posY - game->graphics.sprites[i].y;
+        float dx = game->player.posX - game->sprite[i].x;
+        float dy = game->player.posY - game->sprite[i].y;
         game->graphics.spriteDistance[i] = dx * dx + dy * dy;
     }
 
@@ -28,7 +28,7 @@ void drawSprites(Game *game)
     for (size_t i = 0; i < game->level.spriteCount; i++)
     {
         int spriteIndex = game->graphics.spriteOrder[i];
-        Sprite *sprite = &game->graphics.sprites[spriteIndex];
+        Sprite *sprite = &game->sprite[spriteIndex];
         float spriteWorldX = sprite->x;
         float spriteWorldY = sprite->y;
 

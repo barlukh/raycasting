@@ -36,9 +36,17 @@ bool isValidTile(char tile)
     return false;
 }
 
-bool isWalkableTile(char tile)
+bool isWalkablePlayerTile(char tile)
 {
     if (tile == FLOOR || isPlayerTile(tile))
+        return true;
+
+    return false;
+}
+
+bool isWalkableSpriteTile(char tile)
+{
+    if (tile == FLOOR || tile == SPRITE_SKELWALK)
         return true;
 
     return false;

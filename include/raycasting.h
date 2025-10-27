@@ -40,6 +40,7 @@
 
 #define PLANE_FOV           0.66
 #define MOVEMENT_SPEED      4
+#define SPRITE_SPEED        1.7
 #define MOUSE_SENSITIVITY   0.002f
 #define ROTATION_SMOOTHING  0.8f
 
@@ -170,7 +171,6 @@ typedef struct Graphics
     int         *spriteOrder;
     float       *spriteDistance;
     float       *ZBuffer;
-    Sprite      *sprites;
     Image       ceiling;
     Image       floor;
     Image       wall;
@@ -207,6 +207,7 @@ typedef struct Game
     Level       level;
     Player      player;
     Screen      screen;
+    Sprite      *sprite;
 }   Game;
 
 
@@ -226,7 +227,8 @@ int     initializeGame(Game *game);
 bool    isPlayerTile(char tile);
 bool    isSpriteTile(char tile);
 bool    isValidTile(char tile);
-bool    isWalkableTile(char tile);
+bool    isWalkablePlayerTile(char tile);
+bool    isWalkableSpriteTile(char tile);
 int     loadImages(Game *game);
 int     loadMap(Game *game);
 void    renderFrame(Game *game);

@@ -177,7 +177,7 @@ static int floodFill(char **map, char **tempMap, int height, int col, int row)
     if (map[row][col] == EMPTY)
         return (FAILURE);
 
-    if (!isWalkableTile(map[row][col]) && map[row][col] != EMPTY)
+    if (!isWalkablePlayerTile(map[row][col]) && map[row][col] != EMPTY)
         return (SUCCESS);
 
     if (floodFill(map, tempMap, height, col - 1, row) != SUCCESS)

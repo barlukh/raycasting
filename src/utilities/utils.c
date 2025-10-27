@@ -30,7 +30,7 @@ void updateTimers(Game *game)
     float frameTime = GetFrameTime();
     for (size_t i = 0; i < game->level.spriteCount; i++)
     {
-        Sprite *sprite = &game->graphics.sprites[i];
+        Sprite *sprite = &game->sprite[i];
         sprite->timer += frameTime;
         if (sprite->timer >= sprite->frameThreshold)
         {

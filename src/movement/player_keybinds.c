@@ -50,9 +50,9 @@ static void playerMovement(Game *game)
     float nextX = game->player.posX + moveX;
     float nextY = game->player.posY + moveY;
 
-    if (isWalkableTile(game->level.map[(int)game->player.posY][(int)nextX]))
+    if (isWalkablePlayerTile(game->level.map[(int)game->player.posY][(int)nextX]))
         game->player.posX = nextX;
-    if (isWalkableTile(game->level.map[(int)nextY][(int)game->player.posX]))
+    if (isWalkablePlayerTile(game->level.map[(int)nextY][(int)game->player.posX]))
         game->player.posY = nextY;
 }
 

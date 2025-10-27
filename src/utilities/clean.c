@@ -3,7 +3,7 @@
 /*  File:       clean.c                                                                 */
 /*  Purpose:    Functions for cleaning up the program resources                         */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/24                                                              */
+/*  Updated:    2025/10/27                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -19,7 +19,7 @@ void cleanProgram(const char *errMsg, Game *game)
     free(game->graphics.spriteOrder);
     free(game->graphics.spriteDistance);
     free(game->graphics.ZBuffer);
-    free(game->graphics.sprites);
+    free(game->sprite);
 
     fputs(errMsg, stderr);
 }
