@@ -3,13 +3,11 @@
 /*  File:       utils.c                                                                 */
 /*  Purpose:    Various utility and helper functions                                    */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/24                                                              */
+/*  Updated:    2025/10/27                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
 #include "raycasting.h"
-
-static bool isMapTile(char tile);
 
 char *copyString(const char *s)
 {
@@ -25,47 +23,6 @@ char *copyString(const char *s)
         copy[i] = s[i];
 
     return copy;
-}
-
-bool isPlayerTile(char tile)
-{
-    if (tile == PLAYER_N || tile == PLAYER_S || tile == PLAYER_W || tile == PLAYER_E)
-        return true;
-    
-    return false;
-}
-
-bool isSpriteTile(char tile)
-{
-    if (tile == SPRITE_MAGE || tile == SPRITE_MYSTIC || tile == SPRITE_SMITH
-        || tile == SPRITE_SKELWALK)
-        return true;
-
-    return false;
-}
-
-bool isValidTile(char tile)
-{
-    if (isMapTile(tile) || isSpriteTile(tile) || isPlayerTile(tile))
-        return true;
-
-    return false;
-}
-
-bool isWalkableTile(char tile)
-{
-    if (tile == FLOOR || isPlayerTile(tile))
-        return true;
-
-    return false;
-}
-
-static bool isMapTile(char tile)
-{
-    if (tile == EMPTY || tile == FLOOR || tile == WALL)
-        return true;
-
-    return false;
 }
 
 void updateTimers(Game *game)

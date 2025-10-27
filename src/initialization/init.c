@@ -1,9 +1,9 @@
 /* ************************************************************************************ */
 /*                                                                                      */
 /*  File:       init.c                                                                  */
-/*  Purpose:    Functions for initializing starting values                              */
+/*  Purpose:    Initializing of starting values                                         */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/22                                                              */
+/*  Updated:    2025/10/27                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -24,7 +24,7 @@ int initializeGame(Game *game)
     if (initializeScreen(game) != SUCCESS)
         return FAILURE;
 
-    if (allocSprites(game) != SUCCESS)
+    if (setSprites(game) != SUCCESS)
         return FAILURE;
 
     if (initializeGraphics(game) != SUCCESS)

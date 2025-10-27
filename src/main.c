@@ -19,6 +19,7 @@ int main(void)
     while (!WindowShouldClose())
     {
         detectUserInput(&game);
+        updateSpritePositions(&game);
         renderFrame(&game);
         UpdateTexture(game.screenTexture, game.screenImg.data);
 
@@ -26,7 +27,7 @@ int main(void)
         
         ClearBackground(BLACK);
         DrawTexture(game.screenTexture, 0, 0, RAYWHITE);
-        DrawFPS(100, 100);
+        DrawFPS(game.screen.width / 100, game.screen.width / 100);
 
         EndDrawing();
     }

@@ -1,9 +1,9 @@
 /* ************************************************************************************ */
 /*                                                                                      */
 /*  File:       load_images.c                                                           */
-/*  Purpose:    Loads .png image files of tiles and sprites                             */
+/*  Purpose:    Loading of .png image files of tiles and sprites                        */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/24                                                              */
+/*  Updated:    2025/10/27                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 

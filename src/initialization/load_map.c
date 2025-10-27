@@ -1,9 +1,9 @@
 /* ************************************************************************************ */
 /*                                                                                      */
 /*  File:       load_map.c                                                              */
-/*  Purpose:    Loads map.rcm file into a 2D array                                      */
+/*  Purpose:    Loading of map.rcm file into a 2D array                                 */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/21                                                              */
+/*  Updated:    2025/10/27                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 

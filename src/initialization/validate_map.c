@@ -1,9 +1,9 @@
 /* ************************************************************************************ */
 /*                                                                                      */
 /*  File:       validate_map.c                                                          */
-/*  Purpose:    Validates the content of a loaded map                                   */
+/*  Purpose:    Validating the content of a loaded map                                  */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/23                                                              */
+/*  Updated:    2025/10/27                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 

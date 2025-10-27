@@ -10,6 +10,7 @@
 #ifndef RAYCASTING_H
 #define RAYCASTING_H
 
+
 //----------------------------------------------------------------------------------------
 // Library Headers
 //----------------------------------------------------------------------------------------
@@ -20,6 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "raylib.h"
+
 
 //----------------------------------------------------------------------------------------
 // Macro Definitions
@@ -136,6 +138,7 @@
 #define ERR_SCREEN_SIZE "Error: Screen size values\n"
 #define ERR_TEX_LOAD    "Error: Failed to load texture\n"
 
+
 //----------------------------------------------------------------------------------------
 // Type Definitions
 //----------------------------------------------------------------------------------------
@@ -152,6 +155,7 @@ typedef struct Sprite
 {
     float       x;
     float       y;
+    bool        isStationary;
     int         width;
     int         height;
     int         totalFrames;
@@ -205,11 +209,11 @@ typedef struct Game
     Screen      screen;
 }   Game;
 
+
 //----------------------------------------------------------------------------------------
 // Function Prototypes
 //----------------------------------------------------------------------------------------
 
-int     allocSprites(Game *game);
 void    castRayforColumn(int x, Game *game);
 void    castRayforStripe(int y, Game *game);
 void    cleanProgram(const char *errMsg, Game *game);
@@ -227,7 +231,10 @@ int     loadImages(Game *game);
 int     loadMap(Game *game);
 void    renderFrame(Game *game);
 void    setColor(Image *img, int x, int y, Color color);
+int     setSprites(Game *game);
+void    updateSpritePositions(Game *game);
 void    updateTimers(Game *game);
 int     validateMap(Game *game);
+
 
 #endif

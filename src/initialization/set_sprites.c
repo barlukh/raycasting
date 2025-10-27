@@ -1,9 +1,9 @@
 /* ************************************************************************************ */
 /*                                                                                      */
-/*  File:       alloc_sprites.c                                                         */
-/*  Purpose:    Allocates arrays for sprite rendering                                   */
+/*  File:       set_sprites.c                                                           */
+/*  Purpose:    Allocation of arrays for sprites and setting their initial variables    */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/24                                                              */
+/*  Updated:    2025/10/27                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -15,7 +15,7 @@ static void initMystic(size_t pos, Game *game);
 static void initSmith(size_t pos, Game *game);
 static void initSkelWalk(size_t pos, Game *game);
 
-int allocSprites(Game *game)
+int setSprites(Game *game)
 {
     if (game->level.spriteCount == 0)
         return SUCCESS;
@@ -66,6 +66,7 @@ static void mapSprites(Game *game)
 
 static void initMage(size_t pos, Game *game)
 {
+    game->graphics.sprites[pos].isStationary = true;
     game->graphics.sprites[pos].width = SPRITE_MAGE_WIDTH;
     game->graphics.sprites[pos].height = SPRITE_MAGE_HEIGHT;
     game->graphics.sprites[pos].totalFrames = SPRITE_MAGE_FRAMES;
@@ -76,6 +77,7 @@ static void initMage(size_t pos, Game *game)
 
 static void initMystic(size_t pos, Game *game)
 {
+    game->graphics.sprites[pos].isStationary = true;
     game->graphics.sprites[pos].width = SPRITE_MYSTIC_WIDTH;
     game->graphics.sprites[pos].height = SPRITE_MYSTIC_HEIGHT;
     game->graphics.sprites[pos].totalFrames = SPRITE_MYSTIC_FRAMES;
@@ -86,6 +88,7 @@ static void initMystic(size_t pos, Game *game)
 
 static void initSmith(size_t pos, Game *game)
 {
+    game->graphics.sprites[pos].isStationary = true;
     game->graphics.sprites[pos].width = SPRITE_SMITH_WIDTH;
     game->graphics.sprites[pos].height = SPRITE_SMITH_HEIGHT;
     game->graphics.sprites[pos].totalFrames = SPRITE_SMITH_FRAMES;
@@ -96,6 +99,7 @@ static void initSmith(size_t pos, Game *game)
 
 static void initSkelWalk(size_t pos, Game *game)
 {
+    game->graphics.sprites[pos].isStationary = false;
     game->graphics.sprites[pos].width = SPRITE_SKELWALK_WIDTH;
     game->graphics.sprites[pos].height = SPRITE_SKELWALK_HEIGHT;
     game->graphics.sprites[pos].totalFrames = SPRITE_SKELWALK_FRAMES;
