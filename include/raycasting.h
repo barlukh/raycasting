@@ -3,7 +3,7 @@
 /*  File:       raycasting.h                                                            */
 /*  Purpose:    Main header file of the program                                         */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/24                                                              */
+/*  Updated:    2025/10/27                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -42,7 +42,7 @@
 #define ROTATION_SMOOTHING  0.8f
 
 #define BYTES_PER_PIXEL     4
-#define SHADOW_STRENGTH     0.05f
+#define SHADOW_STRENGTH     0.03f
 
 #define EMPTY           ' '
 #define FLOOR           '0'

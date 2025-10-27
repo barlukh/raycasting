@@ -40,10 +40,10 @@ make
 
 - Controls: W, A, S, D to move, mouse for camera rotation, ESC to exit
 - Map tiles can be modified in the level/map.rcm file (all lines must end with newline)
+- Basic parsing of the map (flood fill, missing player, invalid characters)
 - Folder graphics/ has a variety of textures, you can set paths to them in the .h file
 - There isn't any game mechanic, this project is mostly a showcase of a graphical engine
 - Various varibles can be set to different values in the .h file (darkness, speed, etc...)
-- Multi-threading applied through OpenMP where applicable
 
 
 ## License
@@ -95,4 +95,8 @@ When distributing this project, please ensure:
 
 <p align="center">
   <img src="graphics/screenshots/screenshot6.png" style="max-width:100%; height:auto;" alt="screenshot6"/>
+</p>
+
+<p align="center">
+  <img src="graphics/screenshots/screenshot7.png" style="max-width:100%; height:auto;" alt="screenshot7"/>
 </p>
