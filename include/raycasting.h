@@ -155,9 +155,10 @@ typedef struct Animations
 
 typedef struct Sprite
 {
+    char        type;
+    bool        isStationary;
     float       x;
     float       y;
-    bool        isStationary;
     int         width;
     int         height;
     int         totalFrames;

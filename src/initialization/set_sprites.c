@@ -66,6 +66,7 @@ static void mapSprites(Game *game)
 
 static void initMage(size_t pos, Game *game)
 {
+    game->sprite[pos].type = SPRITE_MAGE;
     game->sprite[pos].isStationary = true;
     game->sprite[pos].width = SPRITE_MAGE_WIDTH;
     game->sprite[pos].height = SPRITE_MAGE_HEIGHT;
@@ -77,6 +78,7 @@ static void initMage(size_t pos, Game *game)
 
 static void initMystic(size_t pos, Game *game)
 {
+    game->sprite[pos].type = SPRITE_MYSTIC;
     game->sprite[pos].isStationary = true;
     game->sprite[pos].width = SPRITE_MYSTIC_WIDTH;
     game->sprite[pos].height = SPRITE_MYSTIC_HEIGHT;
@@ -88,6 +90,7 @@ static void initMystic(size_t pos, Game *game)
 
 static void initSmith(size_t pos, Game *game)
 {
+    game->sprite[pos].type = SPRITE_SMITH;
     game->sprite[pos].isStationary = true;
     game->sprite[pos].width = SPRITE_SMITH_WIDTH;
     game->sprite[pos].height = SPRITE_SMITH_HEIGHT;
@@ -99,6 +102,7 @@ static void initSmith(size_t pos, Game *game)
 
 static void initSkelWalk(size_t pos, Game *game)
 {
+    game->sprite[pos].type = SPRITE_SKELWALK;
     game->sprite[pos].isStationary = false;
     game->sprite[pos].width = SPRITE_SKELWALK_WIDTH;
     game->sprite[pos].height = SPRITE_SKELWALK_HEIGHT;

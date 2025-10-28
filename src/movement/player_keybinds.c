@@ -51,14 +51,24 @@ static void playerMovement(Game *game)
     float oldY = game->player.posY;
     float nextX = oldX + moveX;
     float nextY = oldY + moveY;
+    int oldTileX = (int)oldX;
+    int oldTileY = (int)oldY;
+    int nextTileX = (int)nextX;
+    int nextTileY = (int)nextY;
 
-    if (isWalkablePlayerTile(game->level.map[(int)oldY][(int)nextX]))
+    if (isWalkablePlayerTile(game->level.map[oldTileY][nextTileX]))
         game->player.posX = nextX;
-    if (isWalkablePlayerTile(game->level.map[(int)nextY][(int)oldX]))
+    if (isWalkablePlayerTile(game->level.map[nextTileY][oldTileX]))
         game->player.posY = nextY;
     
-    game->level.map[(int)oldY][(int)oldX] = FLOOR;
-    game->level.map[(int)game->player.posY][(int)game->player.posX] = PLAYER;
+    int newTileX = (int)game->player.posX;
+    int newTileY = (int)game->player.posY;
+
+    if (oldTileX != newTileX || oldTileY != newTileY)
+    {
+        game->level.map[oldTileY][oldTileX] = FLOOR;
+        game->level.map[newTileY][newTileX] = PLAYER;
+    }
 }
 
 static void cameraRotation(Game *game)
