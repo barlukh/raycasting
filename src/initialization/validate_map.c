@@ -3,7 +3,7 @@
 /*  File:       validate_map.c                                                          */
 /*  Purpose:    Validating the content of a loaded map                                  */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/27                                                              */
+/*  Updated:    2025/10/28                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -66,6 +66,8 @@ static int validateTiles(Game *game)
                     playerFound = true;
                     if (setPlayer(game->level.map[y][x], x, y, game) != SUCCESS)
                         return FAILURE;
+                    
+                    game->level.map[y][x] = PLAYER;
                 }
             }
 

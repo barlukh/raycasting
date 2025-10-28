@@ -14,6 +14,7 @@ A compact raycasting engine powered by [raylib](https://www.raylib.com/), design
 - Raycasting for wall detection and rendering
 - Drawing of different animated sprites
 - Basic player movement and rotation
+- Movement of sprites to follow the player
 - Texture support for walls and NPCs
 - Built using the C-based raylib framework
 - Fixed-point arithmetic and optimization through bitwise operations

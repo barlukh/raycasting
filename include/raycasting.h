@@ -3,7 +3,7 @@
 /*  File:       raycasting.h                                                            */
 /*  Purpose:    Main header file of the program                                         */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/27                                                              */
+/*  Updated:    2025/10/28                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -50,6 +50,7 @@
 #define EMPTY           ' '
 #define FLOOR           '0'
 #define WALL            '1'
+#define PLAYER          'P'
 #define PLAYER_N        'N'
 #define PLAYER_S        'S'
 #define PLAYER_E        'E'
@@ -58,7 +59,7 @@
 #define SPRITE_MYSTIC   'Y'
 #define SPRITE_SMITH    'B'
 #define SPRITE_SKELWALK 'K'
-#define VISITED         'v'
+#define VISITED         'V'
 
 #define LEVEL_MAP       "level/map.rcm"
 #define TEXTURE_CEILING "graphics/tiles/texture42.png"

@@ -3,7 +3,7 @@
 /*  File:       tile_type.c                                                             */
 /*  Purpose:    Checking for various tile types                                         */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/27                                                              */
+/*  Updated:    2025/10/28                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -13,7 +13,8 @@ static bool isMapTile(char tile);
 
 bool isPlayerTile(char tile)
 {
-    if (tile == PLAYER_N || tile == PLAYER_S || tile == PLAYER_W || tile == PLAYER_E)
+    if (tile == PLAYER || tile == PLAYER_N || tile == PLAYER_S || tile == PLAYER_W
+        || tile == PLAYER_E)
         return true;
     
     return false;

@@ -3,7 +3,7 @@
 /*  File:       player_keybinds.c                                                       */
 /*  Purpose:    Keybinds and user input checking                                        */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/27                                                              */
+/*  Updated:    2025/10/28                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
@@ -47,15 +47,19 @@ static void playerMovement(Game *game)
         moveY += game->player.planeY * speed;
     }
 
-    float nextX = game->player.posX + moveX;
-    float nextY = game->player.posY + moveY;
+    float oldX = game->player.posX;
+    float oldY = game->player.posY;
+    float nextX = oldX + moveX;
+    float nextY = oldY + moveY;
 
-    if (isWalkablePlayerTile(game->level.map[(int)game->player.posY][(int)nextX]))
+    if (isWalkablePlayerTile(game->level.map[(int)oldY][(int)nextX]))
         game->player.posX = nextX;
-    if (isWalkablePlayerTile(game->level.map[(int)nextY][(int)game->player.posX]))
+    if (isWalkablePlayerTile(game->level.map[(int)nextY][(int)oldX]))
         game->player.posY = nextY;
+    
+    game->level.map[(int)oldY][(int)oldX] = FLOOR;
+    game->level.map[(int)game->player.posY][(int)game->player.posX] = PLAYER;
 }
-
 
 static void cameraRotation(Game *game)
 {
