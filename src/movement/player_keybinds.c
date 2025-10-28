@@ -49,18 +49,20 @@ static void playerMovement(Game *game)
 
     float oldX = game->player.posX;
     float oldY = game->player.posY;
-    float nextX = oldX + moveX;
-    float nextY = oldY + moveY;
     int oldTileX = (int)oldX;
     int oldTileY = (int)oldY;
+
+    float nextX = oldX + moveX;
+    float nextY = oldY + moveY;
     int nextTileX = (int)nextX;
     int nextTileY = (int)nextY;
 
     if (isWalkablePlayerTile(game->level.map[oldTileY][nextTileX]))
         game->player.posX = nextX;
+
     if (isWalkablePlayerTile(game->level.map[nextTileY][oldTileX]))
         game->player.posY = nextY;
-    
+
     int newTileX = (int)game->player.posX;
     int newTileY = (int)game->player.posY;
 

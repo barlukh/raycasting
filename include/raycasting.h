@@ -228,6 +228,7 @@ Color   getColor(Image *img, int x, int y, float distance);
 int     initializeGame(Game *game);
 bool    isPlayerTile(char tile);
 bool    isSpriteTile(char tile);
+bool    isTileOccupied(Game *game, int tileX, int tileY, size_t selfIndex);
 bool    isValidTile(char tile);
 bool    isWalkablePlayerTile(char tile);
 bool    isWalkableSpriteTile(char tile);

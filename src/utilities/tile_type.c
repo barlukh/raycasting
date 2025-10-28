@@ -29,6 +29,22 @@ bool isSpriteTile(char tile)
     return false;
 }
 
+bool isTileOccupied(Game *game, int tileX, int tileY, size_t selfIndex)
+{
+    for (size_t j = 0; j < game->level.spriteCount; j++)
+    {
+        if (j == selfIndex)
+            continue;
+
+        int spriteX = (int)game->sprite[j].x;
+        int spriteY = (int)game->sprite[j].y;
+        if (spriteX == tileX && spriteY == tileY)
+            return true;
+    }
+
+    return false;
+}
+
 bool isValidTile(char tile)
 {
     if (isMapTile(tile) || isSpriteTile(tile) || isPlayerTile(tile))

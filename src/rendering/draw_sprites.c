@@ -1,9 +1,9 @@
 /* ************************************************************************************ */
 /*                                                                                      */
 /*  File:       draw_sprites.c                                                          */
-/*  Purpose:    Drsprite on the screen in the correct order                   */
+/*  Purpose:    Drawing of sprites on the screen in the correct order                   */
 /*  Author:     barlukh (Boris Gazur)                                                   */
-/*  Updated:    2025/10/27                                                              */
+/*  Updated:    2025/10/28                                                              */
 /*                                                                                      */
 /* ************************************************************************************ */
 
